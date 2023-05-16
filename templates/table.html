@@ -1,32 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Train Listing</title>
-    <!-- Add your CSS stylesheets and other static files here -->
+    <style>
+        /* Add CSS styles for the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        /* Add CSS styles for the webpage layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Train Listing</h1>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Departure</th>
-                <th>Destination</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for train in trains %}
+    <div class="container">
+        <h1>Trains</h1>
+
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ train[0] }}</td>
-                    <td>{{ train[1] }}</td>
-                    <td>{{ train[2] }}</td>
-                    <td>{{ train[3] }}</td>
+                {% for header in headers %}
+                    <th>{{ header }}</th>
+                {% endfor %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        {% for column in row %}
+                            {% if loop.index0 == column_with_image_index %} {# Specify the column index where the image URLs are stored, starting from 0 #}
+                                <td><img src="static/{{ column }}" alt="Image"></td>
+                            {% else %}
+                                <td>{{ column }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
