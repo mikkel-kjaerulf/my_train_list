@@ -82,10 +82,18 @@ def signup():
         conn.close()
     return render_template('signup.html')
 
-@app.route('/train')
-def train_view():
+@app.route('/train/<name>')
+def train_view(name):
+    # Establish a connection to the PostgreSQL database
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM trains WHERE trains.\"('Name', 'Name')\" = '%s';" % (name) )    
+    row = cursor.fetchall()
+    train_name = row[0][1]
+    cursor.close()
+    conn.close()
 
-    return render_template('trainview.html')
+    return render_template('trainview.html', name = train_name)
 
 if __name__ == '__main__':
     app.run()
