@@ -1,0 +1,20 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Train Listing</title>
+        <!-- Add your CSS stylesheets and other static files here -->
+    </head>
+    <body>
+        <form action="{{ url_for('signup')}}" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="fname" placeholder="name">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="femail" placeholder="email">
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="fpassword" placeholder="password">
+            <button type="submit">Sign Up</button>
+        </form>
+        
+    </body>
+    </html>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import psycopg2
 
 app = Flask(__name__)
@@ -60,6 +60,27 @@ def render_table():
 
     # Render the HTML template with the table data
     return render_template('table.html', rows=rows, headers=headers, column_with_image_index=11)
+
+@app.route('/signup', methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        # Establish a connection to the PostgreSQL database
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Get max uid and add 1 to get new id for user
+        cursor.execute("SELECT MAX(id) FROM users;")
+        uid = cursor.fetchall()[0][0] + 1
+        # Get other input 
+        name = request.form.get("fname")
+        mail = request.form.get("femail")
+        password = request.form.get("fpassword")
+        query = "INSERT INTO users (id, name, mail, password) VALUES (%s, %s, %s, %s);"
+        cursor.execute(query, (uid, name, mail, password))
+        conn.commit()
+        cursor.close()
+        conn.close()
+    return render_template('signup.html')
 
 if __name__ == '__main__':
     app.run()
