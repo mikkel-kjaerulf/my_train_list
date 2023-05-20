@@ -90,10 +90,30 @@ def train_view(name):
     cursor.execute("SELECT * FROM trains WHERE trains.\"('Name', 'Name')\" = '%s';" % (name) )    
     row = cursor.fetchall()
     train_name = row[0][1]
+    train_operator = row[0][2]
+    train_family = row[0][3]
+    train_manufacturer = row[0][4]
+    train_power_supply = row[0][5]
+    train_max_speed_op = row[0][6]
+    train_max_speed_d = row[0][7]
+    train_max_speed_rec = row[0][8]
+    train_in_service = row[0][9]
+    train_picture = row[0][10]
     cursor.close()
     conn.close()
 
-    return render_template('trainview.html', name = train_name)
+    return render_template(
+        'trainview.html', 
+        name = train_name, 
+        operator = train_operator,
+        family = train_family,
+        manufacturer = train_manufacturer,
+        power_supplu = train_power_supply,
+        max_speed_op = train_max_speed_op,
+        max_speed_d = train_max_speed_d,
+        max_speed_rec = train_max_speed_rec,
+        in_service = train_in_service,
+        picture = train_picture)
 
 if __name__ == '__main__':
     app.run()

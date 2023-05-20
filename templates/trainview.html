@@ -65,7 +65,7 @@
     <h1>Train Information</h1>
 
     <div class="train-card">
-        <img src="path_to_image" alt="Train Image">
+        <img src="{{ picture }}" alt="Train Image">
 
         <table>
             <tr>
@@ -74,35 +74,35 @@
             </tr>
             <tr>
                 <td><strong>Operators:</strong></td>
-                <td>Operators List</td>
+                <td>{{ operator }}</td>
             </tr>
             <tr>
                 <td><strong>Family:</strong></td>
-                <td>Train Family</td>
+                <td>{{ family }}</td>
             </tr>
             <tr>
                 <td><strong>Manufacturer:</strong></td>
-                <td>Train Manufacturer</td>
+                <td>{{ manufacturer }}</td>
             </tr>
             <tr>
                 <td><strong>Power Supply:</strong></td>
-                <td>Power Supply Type</td>
+                <td>{{ power_supply }}</td>
             </tr>
             <tr>
                 <td><strong>Maximum Speed (Operated):</strong></td>
-                <td>Operated Speed</td>
+                <td>{{ max_speed_op }}</td>
             </tr>
             <tr>
                 <td><strong>Maximum Speed (Designed):</strong></td>
-                <td>Designed Speed</td>
+                <td>{{ max_speed_d  }}</td>
             </tr>
             <tr>
                 <td><strong>Maximum Speed (Recorded):</strong></td>
-                <td>Recorded Speed</td>
+                <td>{{ max_speed_rec  }}</td>
             </tr>
             <tr>
                 <td><strong>In Service:</strong></td>
-                <td>Yes/No</td>
+                <td>{{ in_service  }}</td>
             </tr>
         </table>
     </div>
