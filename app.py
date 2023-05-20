@@ -82,5 +82,10 @@ def signup():
         conn.close()
     return render_template('signup.html')
 
+@app.route('/train')
+def train_view():
+
+    return render_template('trainview.html')
+
 if __name__ == '__main__':
     app.run()
