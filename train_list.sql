@@ -16,6 +16,10 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+DROP INDEX public.ix_users_id;
+DROP INDEX public.ix_trains_index;
+DROP TABLE public.users;
+DROP TABLE public.trains;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
