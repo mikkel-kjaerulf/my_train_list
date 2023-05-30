@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import LoginManager
+from psycopg2 import sql
 
 import psycopg2
 
@@ -102,6 +103,7 @@ def train_view(name):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
     row = cursor.fetchall()
+    train_id = row[0][0]
     train_name = row[0][1]
     train_operator = row[0][2]
     train_family = row[0][3]
@@ -120,8 +122,11 @@ def train_view(name):
         cursor = conn.cursor()
 
         text = request.form.get("freviewtext")
-        query = "INSERT INTO reviews "
-
+        query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
+        cursor.execute(query, (100, train_id, 10, text))
+        conn.commit()
+        cursor.close()
+        conn.close()
 
     return render_template(
         'trainview.html', 
