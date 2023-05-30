@@ -1,14 +1,17 @@
 from flask import Flask, render_template, request
-#from flask_login import LoginManager
-#from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 import psycopg2
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '9a37a774ca5dbe2483735f81cf2cb47fad30382409ddbe8d4b944c9f4b981008'
 #bcrypt = Bcrypt(app)
-#login_manager = LoginManager(app)
-#login_manager.login_view = 'login'
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 # Configure the database connection
 def get_db_connection():
@@ -93,12 +96,12 @@ def signup():
         conn.close()
     return render_template('signup.html')
 
-@app.route('/train/<name>')
+@app.route('/train/<name>', methods=["GET", "POST"])
 def train_view(name):
     # Establish a connection to the PostgreSQL database
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM trains WHERE trains.\"('Name', 'Name')\" = '%s';" % (name) )    
+    cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
     row = cursor.fetchall()
     train_name = row[0][1]
     train_operator = row[0][2]
@@ -112,6 +115,14 @@ def train_view(name):
     train_picture = row[0][10]
     cursor.close()
     conn.close()
+
+    if request.methods == "POST":
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        text = request.form.get("freviewtext")
+        query = "INSERT INTO reviews "
+
 
     return render_template(
         'trainview.html', 
