@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_login import LoginManager
 
 import psycopg2
@@ -28,28 +28,27 @@ def get_db_connection():
 #def login():
 
 
-# Example route to fetch data from the database
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        search_query = request.form.get('search')
+        return redirect(url_for('search', query=search_query))
+    
+    return render_template('index.html')
+
+@app.route('/search')
+def search():
+    query = request.args.get('query')
+    
+    # Perform search in the database based on the query
     connection = get_db_connection()
     cursor = connection.cursor()
-    
-    # Execute a query
-    cursor.execute('SELECT * FROM trains')
-    
-    # Fetch the results
+    cursor.execute(f"SELECT * FROM trains WHERE name ILIKE '%{query}%'")
     results = cursor.fetchall()
-
-    # Close the cursor and connection
     cursor.close()
     connection.close()
     
-    # Process the results and return the response
-    response = ''
-    for row in results:
-        response += f'Train ID: {row[0]}, Train Name: {row[1]}<br>'
-    
-    return response
+    return render_template('search.html', results=results, column_with_image_index=10, column_with_train_name_index=1)
 
 @app.route('/table')
 def render_table():
@@ -73,7 +72,7 @@ def render_table():
     conn.close()
 
     # Render the HTML template with the table data
-    return render_template('table.html', rows=rows, headers=headers, column_with_image_index=11)
+    return render_template('table.html', rows=rows, headers=headers, column_with_image_index=10, column_with_train_name_index=1)
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -101,6 +100,7 @@ def train_view(name):
     # Establish a connection to the PostgreSQL database
     conn = get_db_connection()
     cursor = conn.cursor()
+    cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
     cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
     row = cursor.fetchall()
     train_name = row[0][1]
