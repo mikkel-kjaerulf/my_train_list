@@ -123,8 +123,9 @@ def train_view(name):
         cursor = conn.cursor()
 
         text = request.form.get("freviewtext")
+        rating = request.form.get("rating")
         query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
-        cursor.execute(query, (100, train_id, 10, text))
+        cursor.execute(query, (100, train_id, rating, text))
         conn.commit()
         cursor.close()
         conn.close()
