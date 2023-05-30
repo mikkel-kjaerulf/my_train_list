@@ -21,149 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: attends; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.attends (
-    student character varying(50),
-    course character varying(50)
-);
-
-
-ALTER TABLE public.attends OWNER TO mikkelkjaerulf;
-
---
--- Name: client; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.client (
-    id integer NOT NULL,
-    name character(20),
-    address character(20),
-    email character(20),
-    phone_number integer
-);
-
-
-ALTER TABLE public.client OWNER TO mikkelkjaerulf;
-
---
--- Name: customers; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.customers (
-    id integer NOT NULL
-);
-
-
-ALTER TABLE public.customers OWNER TO mikkelkjaerulf;
-
---
--- Name: laptop; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.laptop (
-    model integer,
-    speed double precision,
-    ram integer,
-    hd integer,
-    screen double precision,
-    price integer
-);
-
-
-ALTER TABLE public.laptop OWNER TO mikkelkjaerulf;
-
---
--- Name: likes; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.likes (
-    student character varying(50),
-    lecturer character varying(50)
-);
-
-
-ALTER TABLE public.likes OWNER TO mikkelkjaerulf;
-
---
--- Name: pc; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.pc (
-    model integer,
-    speed double precision,
-    ram integer,
-    hd integer,
-    price integer
-);
-
-
-ALTER TABLE public.pc OWNER TO mikkelkjaerulf;
-
---
--- Name: printer; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.printer (
-    model integer,
-    color boolean,
-    type character varying(10),
-    price integer
-);
-
-
-ALTER TABLE public.printer OWNER TO mikkelkjaerulf;
-
---
--- Name: product; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.product (
-    maker character varying(1),
-    model integer,
-    type character varying(10)
-);
-
-
-ALTER TABLE public.product OWNER TO mikkelkjaerulf;
-
---
--- Name: s; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.s (
-    name character(50)
-);
-
-
-ALTER TABLE public.s OWNER TO mikkelkjaerulf;
-
---
--- Name: s1; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.s1 (
-    name character(140)
-);
-
-
-ALTER TABLE public.s1 OWNER TO mikkelkjaerulf;
-
---
--- Name: teaches; Type: TABLE; Schema: public; Owner: mikkelkjaerulf
---
-
-CREATE TABLE public.teaches (
-    lecturer character varying(50),
-    course character varying(50)
-);
-
-
-ALTER TABLE public.teaches OWNER TO mikkelkjaerulf;
-
---
--- Name: trains; Type: TABLE; Schema: public; Owner: postgres
+-- Name: trains; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.trains (
@@ -181,10 +39,8 @@ CREATE TABLE public.trains (
 );
 
 
-ALTER TABLE public.trains OWNER TO postgres;
-
 --
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
@@ -195,167 +51,8 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
-
 --
--- Data for Name: attends; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.attends (student, course) FROM stdin;
-Anna	DIS
-Bernie	MicroB
-Chris	MacroB
-\.
-
-
---
--- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.client (id, name, address, email, phone_number) FROM stdin;
-\.
-
-
---
--- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.customers (id) FROM stdin;
-\.
-
-
---
--- Data for Name: laptop; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.laptop (model, speed, ram, hd, screen, price) FROM stdin;
-2001	2	2048	240	20.1	3673
-2002	1.73	1024	80	17	949
-2003	1.8	512	60	15.4	549
-2004	2	512	60	13.3	1150
-2005	2.16	1024	120	17	2500
-2006	2	2048	80	15.4	1700
-2007	1.83	1024	120	13.3	1249
-2008	1.6	1024	100	15.4	900
-2009	1.6	512	80	14.1	680
-2010	2	2048	160	15.4	2300
-\.
-
-
---
--- Data for Name: likes; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.likes (student, lecturer) FROM stdin;
-Anna	Dmitriy
-Bernie	Laura
-Chris	Dmitriy
-\.
-
-
---
--- Data for Name: pc; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.pc (model, speed, ram, hd, price) FROM stdin;
-1001	2.66	1024	250	2114
-1002	2.1	512	250	995
-1003	1.42	512	80	478
-1004	2.8	1024	250	649
-1005	3.2	512	250	630
-1006	3.2	1024	320	1049
-1007	2.2	1024	200	510
-1008	2.2	2048	250	770
-1009	2	1024	250	650
-1010	2.8	2048	300	770
-1011	1.86	2048	160	959
-1012	2.8	1024	160	649
-1013	3.06	512	80	529
-\.
-
-
---
--- Data for Name: printer; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.printer (model, color, type, price) FROM stdin;
-3001	t	ink-jet	99
-3002	f	laser	239
-3003	t	laser	899
-3004	t	ink-jet	120
-3005	f	laser	120
-3006	t	ink-jet	100
-3007	t	laser	200
-\.
-
-
---
--- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.product (maker, model, type) FROM stdin;
-A	1001	pc
-A	1002	pc
-A	1003	pc
-A	2004	laptop
-A	2005	laptop
-A	2006	laptop
-B	1004	pc
-B	1005	pc
-B	1006	pc
-B	2007	laptop
-C	1007	pc
-D	1008	pc
-D	1009	pc
-D	1010	pc
-D	3004	printer
-D	3005	printer
-E	1011	pc
-E	1012	pc
-E	1013	pc
-E	2001	laptop
-E	2002	laptop
-E	2003	laptop
-E	3001	printer
-E	3002	printer
-E	3003	printer
-F	2008	laptop
-F	2009	laptop
-G	2010	laptop
-H	3006	printer
-H	3007	printer
-\.
-
-
---
--- Data for Name: s; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.s (name) FROM stdin;
-\.
-
-
---
--- Data for Name: s1; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.s1 (name) FROM stdin;
-\.
-
-
---
--- Data for Name: teaches; Type: TABLE DATA; Schema: public; Owner: mikkelkjaerulf
---
-
-COPY public.teaches (lecturer, course) FROM stdin;
-Dmitriy	DIS
-Anders	MicroB
-Laura	MacroB
-\.
-
-
---
--- Data for Name: trains; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: trains; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.trains (index, name, operators, family, manufacturer, power_supply, max_speed_operational, max_speed_designed, max_speed_record, in_service, picture) FROM stdin;
@@ -495,7 +192,7 @@ COPY public.trains (index, name, operators, family, manufacturer, power_supply, 
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.users (id, name, mail, password) FROM stdin;
@@ -608,41 +305,17 @@ COPY public.users (id, name, mail, password) FROM stdin;
 
 
 --
--- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: mikkelkjaerulf
---
-
-ALTER TABLE ONLY public.client
-    ADD CONSTRAINT client_pkey PRIMARY KEY (id);
-
-
---
--- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: mikkelkjaerulf
---
-
-ALTER TABLE ONLY public.customers
-    ADD CONSTRAINT customers_pkey PRIMARY KEY (id);
-
-
---
--- Name: ix_trains_index; Type: INDEX; Schema: public; Owner: postgres
+-- Name: ix_trains_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ix_trains_index ON public.trains USING btree (index);
 
 
 --
--- Name: ix_users_id; Type: INDEX; Schema: public; Owner: postgres
+-- Name: ix_users_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX ix_users_id ON public.users USING btree (id);
-
-
---
--- Name: customers customers_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mikkelkjaerulf
---
-
-ALTER TABLE ONLY public.customers
-    ADD CONSTRAINT customers_id_fkey FOREIGN KEY (id) REFERENCES public.client(id);
 
 
 --
