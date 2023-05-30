@@ -48,8 +48,11 @@ def search():
     results = cursor.fetchall()
     cursor.close()
     connection.close()
+
+    # get the header
+    headers = [desc[0] for desc in cursor.description]
     
-    return render_template('search.html', results=results, column_with_image_index=10, column_with_train_name_index=1)
+    return render_template('search.html', results=results, headers=headers, column_with_image_index=10, column_with_train_name_index=1)
 
 @app.route('/table')
 def render_table():

@@ -21,7 +21,8 @@
         /* Add CSS styles for the webpage layout */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin-left: 10%; /* Specify the left margin as 10% */
+            margin-right: 10%; /* Specify the right margin as 10% */
             padding: 20px;
         }
 
@@ -31,7 +32,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
         }
     </style>
@@ -53,7 +54,7 @@
                     <tr>
                         {% for column in row %}
                             {% if loop.index0 == column_with_image_index %} {# Specify the column index where the image URLs are stored, starting from 0 #}
-                                <td><img src="static/{{ column }}" alt="Image"></td>
+                                <td><img src="static/{{ column }}" alt="Image" width="200"></td>
                             {% elif loop.index0 == column_with_train_name_index %} {# Specify the column index where the train names are stored, starting from 0 #}
                                 <td><a href="{{ url_for('train_view', name=column) }}">{{ column }}</a></td>
                             {% else %}
