@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Add CSS styles for the webpage layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-form {
+            display: flex;
+        }
+
+        .search-input {
+            flex: 1;
+        }
+
+        .search-button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Train Search</h1>
+
+        <form class="search-form" method="POST" action="{{ url_for('index') }}">
+            <input class="search-input" type="text" name="search" placeholder="Search for trains">
+            <button class="search-button" type="submit">Search</button>
+        </form>
+    </div>
+</body>
+</html>
