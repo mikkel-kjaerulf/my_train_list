@@ -1,7 +1,14 @@
 from flask import Flask, render_template, request
+#from flask_login import LoginManager
+#from flask_bcrypt import Bcrypt
+
 import psycopg2
 
 app = Flask(__name__)
+#bcrypt = Bcrypt(app)
+#login_manager = LoginManager(app)
+#login_manager.login_view = 'login'
+
 
 # Configure the database connection
 def get_db_connection():
@@ -13,6 +20,10 @@ def get_db_connection():
         password="2903"
     )
     return connection
+
+#@app.route('/login', methods=['GET', 'POST'])
+#def login():
+
 
 # Example route to fetch data from the database
 @app.route('/')
