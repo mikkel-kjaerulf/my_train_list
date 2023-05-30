@@ -122,17 +122,14 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
-
         <!-- Display user reviews -->
-        <div class="user-review">
-            <h3>User1</h3>
-            <p>This train is amazing! I love the speed and comfort it offers.</p>
-        </div>
+        {% for review in user_reviews %}
+            <div class="user-review">
+                <h3>{{ review[0] }}</h3>
+                <p>{{ review[2] }}</p>
+            </div>
+        {% endfor %}
 
-        <div class="user-review">
-            <h3>User2</h3>
-            <p>The train is well-maintained and provides a smooth ride.</p>
-        </div>
     </div>
 </body>
 </html>

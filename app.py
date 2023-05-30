@@ -101,7 +101,8 @@ def train_view(name):
     # Establish a connection to the PostgreSQL database
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
+
+    # train info
     cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
     row = cursor.fetchall()
     train_id = row[0][0]
@@ -115,6 +116,14 @@ def train_view(name):
     train_max_speed_rec = row[0][8]
     train_in_service = row[0][9]
     train_picture = row[0][10]
+
+    # review info
+    query = sql.SQL("""SELECT name, rating, comment 
+    FROM reviews NATURAL JOIN (select name, id as uid from users) 
+    AS users WHERE tid = %s;""").format()
+    cursor.execute(query, [train_id])
+    user_reviews = cursor.fetchall()
+
     cursor.close()
     conn.close()
 
@@ -141,7 +150,8 @@ def train_view(name):
         max_speed_d = train_max_speed_d,
         max_speed_rec = train_max_speed_rec,
         in_service = train_in_service,
-        picture = train_picture)
+        picture = train_picture,
+        user_reviews = user_reviews)
 
 if __name__ == '__main__':
     app.run()
