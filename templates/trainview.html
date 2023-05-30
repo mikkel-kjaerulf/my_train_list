@@ -4,7 +4,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin-left: 20%; /* Specify the left margin as 10% */
+            margin-right: 20%; /* Specify the right margin as 10% */
             padding: 20px;
             background-color: #f4f4f4;
         }
@@ -65,7 +66,7 @@
     <h1>Train Information</h1>
 
     <div class="train-card">
-        <img src="static/{{ picture }}" alt="Train Image">
+        <img src="{{ url_for('static', filename=picture) }}" alt="Train Image">
 
         <table>
             <tr>

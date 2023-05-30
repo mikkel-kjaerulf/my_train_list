@@ -101,7 +101,6 @@ def train_view(name):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
-    cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
     row = cursor.fetchall()
     train_name = row[0][1]
     train_operator = row[0][2]
@@ -116,7 +115,7 @@ def train_view(name):
     cursor.close()
     conn.close()
 
-    if request.methods == "POST":
+    if request.method == "POST":
         conn = get_db_connection()
         cursor = conn.cursor()
 
