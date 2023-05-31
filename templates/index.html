@@ -3,19 +3,14 @@
 <head>
     <style>
         /* Add CSS styles for the webpage layout */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+
 
         .search-form {
             display: flex;
+            margin-bottom: 30px;
+            margin-left: 20%;
+            margin-right: 20%;
         }
 
         .search-input {
@@ -24,6 +19,39 @@
 
         .search-button {
             margin-left: 10px;
+        }
+                /* Add CSS styles for the table */
+                table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        /* Add CSS styles for the webpage layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin-left: 10%; /* Specify the left margin as 10% */
+            margin-right: 10%; /* Specify the right margin as 10% */
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -35,6 +63,34 @@
             <input class="search-input" type="text" name="search" placeholder="Search for trains">
             <button class="search-button" type="submit">Search</button>
         </form>
+    </div>
+    <div class="container">
+        <h1>Top Trains</h1>
+
+        <table>
+            <thead>
+                <tr>
+                {% for header in headers %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        {% for column in row %}
+                            {% if loop.index0 == column_with_image_index %} {# Specify the column index where the image URLs are stored, starting from 0 #}
+                                <td><img src="static/{{ column }}" alt="Image" width="200"></td>
+                            {% elif loop.index0 == column_with_train_name_index %} {# Specify the column index where the train names are stored, starting from 0 #}
+                                <td><a href="{{ url_for('train_view', name=column) }}">{{ column }}</a></td>
+                            {% else %}
+                                <td>{{ column }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
