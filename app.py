@@ -132,16 +132,35 @@ def train_view(name):
     cursor.close()
     conn.close()
 
+    # get the reviews
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT u.name, r.rating, r.comment FROM users u RIGHT JOIN reviews r ON r.uid = u.id WHERE r.tid = %s;" % (train_id) )
+    reviews = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    usernames = [review[0] for review in reviews]
+    ratings = [review[1] for review in reviews]
+    comments = [review[2] for review in reviews]
+
+
+    # We need to do something about this method to not allow users to a review multiple times on the same train
+    # otherwise we get an error
     if request.method == "POST":
         conn = get_db_connection()
         cursor = conn.cursor()
 
         text = request.form.get("freviewtext")
+        rating = request.form.get('fscore')
         query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
-        cursor.execute(query, (100, train_id, 10, text))
+        cursor.execute(query, (100, train_id, rating, text))
         conn.commit()
         cursor.close()
         conn.close()
+
+        # redirect to the same page to update the reviews
+        return redirect(url_for('train_view', name=name))
 
     return render_template(
         'trainview.html', 
@@ -154,7 +173,10 @@ def train_view(name):
         max_speed_d = train_max_speed_d,
         max_speed_rec = train_max_speed_rec,
         in_service = train_in_service,
-        picture = train_picture)
+        picture = train_picture,
+        usernames = usernames,
+        ratings = ratings,
+        comments = comments)
 
 if __name__ == '__main__':
     app.run()

@@ -90,7 +90,7 @@ COPY public.reviews (uid, tid, rating, comment) FROM stdin;
 12	21	5	The BR Class 397 is a new and modern train. The interiors are stylish, and the ride is smooth.                                                                                                                                                                                                              
 13	27	4	The BR Class 807 is a comfortable train. The seats are spacious, and the ride is pleasant.                                                                                                                                                                                                                  
 14	35	5	The CRH3A is a high-speed train that offers a luxurious experience. The ride is smooth and quiet.                                                                                                                                                                                                           
-15	43	3	The CR300AF is a decent train. The speed is good, but the seats could be more comfortable.                                                                                                                                                                                                                  
+15	43	3	The CR300AF is a decent train. The speed is good, but the seats could be more comfortable.                
 \.
 
 

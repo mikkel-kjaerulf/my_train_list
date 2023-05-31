@@ -107,7 +107,6 @@
             </tr>
         </table>
     </div>
-
     <div class="user-reviews">
         <h2>User Reviews</h2>
 
@@ -116,21 +115,36 @@
         </div>
 
         <div class="user-review-form">
-            <form form method="post">
+            <form method="post">
                 <textarea name="freviewtext" placeholder="Write a review..."></textarea>
+                
+                <label for="fscore">Score:</label>
+                <div class="score-radios">
+                    <input type="radio" id="score1" name="fscore" value="1">
+                    <label for="score1">1</label>
+                    <input type="radio" id="score2" name="fscore" value="2">
+                    <label for="score2">2</label>
+                    <input type="radio" id="score3" name="fscore" value="3">
+                    <label for="score3">3</label>
+                    <input type="radio" id="score4" name="fscore" value="4">
+                    <label for="score4">4</label>
+                    <input type="radio" id="score5" name="fscore" value="5">
+                    <label for="score5">5</label>
+                </div>
+                
                 <button type="submit">Submit</button>
             </form>
         </div>
 
         <!-- Display user reviews -->
-        <div class="user-review">
-            <h3>User1</h3>
-            <p>This train is amazing! I love the speed and comfort it offers.</p>
-        </div>
-
-        <div class="user-review">
-            <h3>User2</h3>
-            <p>The train is well-maintained and provides a smooth ride.</p>
+        <div class="user-reviews">
+            {% for index in range(usernames|length) %}
+                <div class="user-review">
+                    <h3>{{ usernames[index] }}</h3>
+                    <p>{{ comments[index] }}</p>
+                    <p><strong>Rating: {{ ratings[index] }}</strong></p>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </body>
