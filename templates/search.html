@@ -94,9 +94,35 @@
         td a:hover {
             text-decoration: underline;
         }
+        .navbar {
+        background-color: #333;
+        overflow: hidden;
+        width: 100%;
+        }
+
+        .navbar a {
+        float: left;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        }
+
+        .navbar a:hover {
+        background-color: #111;
+        }
+        .navbar .signup-link {
+         float: right;
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        <a href="/table">Table</a>
+        <a href="/signup" class="signup-link">Sign Up</a>
+    </div>
     <div class="container">
         <h1>Train Search</h1>
 
