@@ -2,56 +2,97 @@
 <html>
 <head>
     <style>
-        /* Add CSS styles for the webpage layout */
-
-
-
-        .search-form {
-            display: flex;
-            margin-bottom: 30px;
-            margin-left: 20%;
-            margin-right: 20%;
+        /* Reset default styles for certain elements */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .search-input {
-            flex: 1;
-        }
-
-        .search-button {
-            margin-left: 10px;
-        }
-                /* Add CSS styles for the table */
-                table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 5px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-        
-        /* Add CSS styles for the webpage layout */
+        /* Set a background color and font family */
         body {
+            background-color: #f5f5f5;
             font-family: Arial, sans-serif;
             margin-left: 10%; /* Specify the left margin as 10% */
             margin-right: 10%; /* Specify the right margin as 10% */
             padding: 20px;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
+        /* Center the content and add padding */
         .container {
             max-width: 100%;
             margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Style the header */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* Style the search form */
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            padding: 10px;
+            font-size: 16px;
+            flex: 1;
+            border: 1px solid #ccc;
+            border-right: none;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2196f3;
+            color: #fff;
+            border: none;
+            border-radius: 0 3px 3px 0;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #0c7cd5;
+        }
+
+        /* Style the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        td a {
+            color: #2196f3;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -80,7 +121,7 @@
                     <tr>
                         {% for column in row %}
                             {% if loop.index0 == column_with_image_index %} {# Specify the column index where the image URLs are stored, starting from 0 #}
-                                <td><img src="static/{{ column }}" alt="Image" width="200"></td>
+                                <td><img src="static/{{ column }}" alt="Image"></td>
                             {% elif loop.index0 == column_with_train_name_index %} {# Specify the column index where the train names are stored, starting from 0 #}
                                 <td><a href="{{ url_for('train_view', name=column) }}">{{ column }}</a></td>
                             {% else %}
