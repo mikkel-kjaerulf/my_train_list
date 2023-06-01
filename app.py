@@ -150,7 +150,8 @@ def signup():
         conn.commit()
         cursor.close()
         conn.close()
-
+        
+        login_user(User.query.filter_by(mail=mail).first())
         # Redirect to a success page or perform any other action
         return jsonify({'redirect': True})
 

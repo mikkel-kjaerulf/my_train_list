@@ -21,12 +21,24 @@ ALTER TABLE ONLY public.reviews DROP CONSTRAINT reviews_tid_fkey;
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
 ALTER TABLE ONLY public.trains DROP CONSTRAINT trains_pkey;
 ALTER TABLE ONLY public.reviews DROP CONSTRAINT reviews_pkey;
+ALTER TABLE ONLY public.listed_trains DROP CONSTRAINT listed_trains_pkey;
 DROP TABLE public.users;
 DROP TABLE public.trains;
 DROP TABLE public.reviews;
+DROP TABLE public.listed_trains;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- Name: listed_trains; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.listed_trains (
+    uid integer NOT NULL,
+    tid integer NOT NULL
+);
+
 
 --
 -- Name: reviews; Type: TABLE; Schema: public; Owner: -
@@ -72,6 +84,14 @@ CREATE TABLE public.users (
 
 
 --
+-- Data for Name: listed_trains; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.listed_trains (uid, tid) FROM stdin;
+\.
+
+
+--
 -- Data for Name: reviews; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -90,7 +110,7 @@ COPY public.reviews (uid, tid, rating, comment) FROM stdin;
 12	21	5	The BR Class 397 is a new and modern train. The interiors are stylish, and the ride is smooth.                                                                                                                                                                                                              
 13	27	4	The BR Class 807 is a comfortable train. The seats are spacious, and the ride is pleasant.                                                                                                                                                                                                                  
 14	35	5	The CRH3A is a high-speed train that offers a luxurious experience. The ride is smooth and quiet.                                                                                                                                                                                                           
-15	43	3	The CR300AF is a decent train. The speed is good, but the seats could be more comfortable.                
+15	43	3	The CR300AF is a decent train. The speed is good, but the seats could be more comfortable.                                                                                                                                                                                                                  
 \.
 
 
@@ -339,11 +359,15 @@ COPY public.users (id, name, mail, password) FROM stdin;
 98	Liam Thompson	liamthompson@example.com	welcome1234567890
 99	Ava Smith	avasmith@example.com	abc1234567890
 100	Noah Garcia	noahgarcia@example.com	pa$$w0rd1234567890
-101	test	test	123
-102	Mikkel	mikkel.doha@gmail.com	123
-103	Mikkel	mikkel.doha@gmail.com	123
-104	Test	test@testmail.com	123
 \.
+
+
+--
+-- Name: listed_trains listed_trains_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.listed_trains
+    ADD CONSTRAINT listed_trains_pkey PRIMARY KEY (uid, tid);
 
 
 --
