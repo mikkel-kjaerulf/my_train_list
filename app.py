@@ -69,7 +69,7 @@ def index():
     # get the trains ordered by rating
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY r.round DESC nulls last;")
+    cursor.execute(f"SELECT name, operators, family, picture FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY r.round DESC nulls last;")
     results = cursor.fetchall()
     cursor.close()
     connection.close()    
@@ -77,7 +77,7 @@ def index():
     # get the header
     headers = [desc[0] for desc in cursor.description]
 
-    return render_template('index.html', rows=results, headers=headers, column_with_image_index=10, column_with_train_name_index=1)
+    return render_template('index.html', rows=results, headers=headers, column_with_image_index=3, column_with_train_name_index=0)
 
 @app.route('/search')
 def search():
@@ -224,4 +224,4 @@ def train_view(name):
         comments = comments)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)
