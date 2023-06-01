@@ -209,42 +209,73 @@ def train_view(name):
     query = sql.SQL("""SELECT ROUND(AVG(rating),2) FROM reviews WHERE tid = %s;""").format()
     cursor.execute(query, [train_id])
     avg_rating = cursor.fetchall()[0][0]
+
+    # get whether the train is already on user list
+    query = sql.SQL("""SELECT * FROM users u RIGHT JOIN listed_trains lt ON u.id = lt.uid WHERE u.id = %s AND lt.tid = %s """).format()
+    cursor.execute(query, [current_user.get_id(), train_id])
+    matches = cursor.fetchall()
+
+    if matches:
+        in_user_list = True
+    else:
+        in_user_list = False
+
     cursor.close()
     conn.close()
 
-    # We need to do something about this method to not allow users to a review multiple times on the same train
-    # otherwise we get an error
+
     if request.method == "POST":
         if not current_user.is_authenticated:
             return redirect('/signup')
+        
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # get typed comment and rating
-        comment = request.form.get("freviewtext")
-        rating = request.form.get('fscore')
+        if request.form['form_name'] == 'add-to-list':
 
-        # check if user has already left a review for this train
-        query = sql.SQL("""SELECT COUNT(1) FROM reviews WHERE tid = %s AND uid = %s;""")
-        cursor.execute(query, [train_id, current_user.get_id()])
-        res = cursor.fetchall()[0][0]
+            query = sql.SQL("INSERT INTO listed_trains (uid, tid) VALUES (%s, %s)").format()
+            cursor.execute(query, [current_user.get_id(), train_id])
+            conn.commit()
 
-        # if user has not left a review, insert into table
-        if (res == 0):
-            query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
-            cursor.execute(query, (current_user.get_id(), train_id, rating, comment))
-            conn.commit()
-        # if user has left a review, update it
-        else:   
-            query = sql.SQL("""UPDATE reviews SET rating = %s, comment = %s WHERE tid = %s AND uid = %s;""").format()
-            cursor.execute(query, (rating, comment, train_id, current_user.get_id()))     
-            conn.commit()
+            cursor.close()
+            conn.close()
+            return redirect(url_for('train_view', name=name))
         
-        cursor.close()
-        conn.close()
+        elif request.form['form_name'] == 'remove-from-list':
+            query = sql.SQL("""DELETE FROM listed_trains lt WHERE lt.uid = %s AND lt.tid = %s""").format()
+            cursor.execute(query, [current_user.get_id(), train_id])
+            conn.commit()
 
-        # redirect to the same page to update the reviews
-        return redirect(url_for('train_view', name=name))
+            cursor.close()
+            conn.close()
+            return redirect(url_for('train_view', name=name))
+        
+        elif request.form['form_name'] == 'review':
+            # get typed comment and rating
+            comment = request.form.get("freviewtext")
+            rating = request.form.get('fscore')
+
+            # check if user has already left a review for this train
+            query = sql.SQL("""SELECT COUNT(1) FROM reviews WHERE tid = %s AND uid = %s;""")
+            cursor.execute(query, [train_id, current_user.get_id()])
+            res = cursor.fetchall()[0][0]
+
+            # if user has not left a review, insert into table
+            if (res == 0):
+                query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
+                cursor.execute(query, (current_user.get_id(), train_id, rating, comment))
+                conn.commit()
+            # if user has left a review, update it
+            else:   
+                query = sql.SQL("""UPDATE reviews SET rating = %s, comment = %s WHERE tid = %s AND uid = %s;""").format()
+                cursor.execute(query, (rating, comment, train_id, current_user.get_id()))     
+                conn.commit()
+            
+            cursor.close()
+            conn.close()
+
+            # redirect to the same page to update the reviews
+            return redirect(url_for('train_view', name=name))
 
     return render_template(
         'trainview.html', 
@@ -261,7 +292,8 @@ def train_view(name):
         usernames = usernames,
         ratings = ratings,
         comments = comments,
-        avg_rating = avg_rating)
+        avg_rating = avg_rating,
+        in_user_list = in_user_list)
 
 if __name__ == '__main__':
     app.run(debug = True)

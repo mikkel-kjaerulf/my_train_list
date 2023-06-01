@@ -126,6 +126,18 @@
                 <td>{{ in_service  }}</td>
             </tr>
         </table>
+        <form method="post">
+            <div class="add-button">
+                {% if in_user_list %}
+                    <input type="hidden" name="form_name" value="remove-from-list">
+                    <button type="submit" class="remove-train-button">Remove Train from My List</button>
+                {% else %}
+                    <input type="hidden" name="form_name" value="add-to-list">
+                    <button type="submit" class="add-train-button">Add Train to My List</button>
+                {% endif %}
+            </div>
+        </form>
+        
     </div>
     <div class="user-reviews">
         <h2>User Reviews</h2>
@@ -136,6 +148,7 @@
 
         <div class="user-review-form">
             <form method="post">
+                <input type="hidden" name="form_name" value="review">
                 <textarea name="freviewtext" placeholder="Write a review..."></textarea>
                 
                 <label for="fscore">Score:</label>

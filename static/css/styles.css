@@ -161,3 +161,32 @@
         background-color: #0c7cd5;
     }
 
+
+
+    .add-button {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .add-train-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .remove-train-button {
+        background-color: #ff9f9f;
+        color: rgb(31, 31, 31);
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .add-button button:hover {
+        background-color: #45a049;
+    }
