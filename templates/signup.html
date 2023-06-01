@@ -81,5 +81,35 @@
             <input type="submit" value="SignUp">
         </form>
         
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                // Handle form submission using AJAX
+                $('#loginForm').submit(function(event) {
+                    event.preventDefault();  // Prevent default form submission behavior
+                    var formData = $(this).serialize();  // Serialize form data
+    
+                    $.ajax({
+                        type: 'POST',
+                        url: '/signup',
+                        data: formData,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.redirect) {
+                                window.location.href = '/';  // Redirect to home page on successful login
+                            } else {
+                                $('#errorMessage').text(response.message);  // Display error message in the modal
+                                $('#errorModal').modal('show');  // Show the error modal
+                            }
+                        },
+                        error: function() {
+                            alert('An error occurred. Please try again.');  // Display a generic error message
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

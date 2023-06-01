@@ -122,23 +122,38 @@ def render_table():
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
+    if current_user.is_authenticated:
+        return redirect('/')  # Redirect to another page (e.g., dashboard) if user is already logged in
     if request.method == "POST":
         # Establish a connection to the PostgreSQL database
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Get max uid and add 1 to get new id for user
-        cursor.execute("SELECT MAX(id) FROM users;")
-        uid = cursor.fetchall()[0][0] + 1
-        # Get other input 
+        # Get input data
         name = request.form.get("fname")
         mail = request.form.get("femail")
         password = request.form.get("fpassword")
-        query = "INSERT INTO users (id, name, mail, password) VALUES (%s, %s, %s, %s);"
-        cursor.execute(query, (uid, name, mail, password))
+
+        # Check if email already exists in the database
+        cursor.execute("SELECT * FROM users WHERE mail = %s", (mail,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            # Display popup message if email already exists
+            return jsonify({'redirect': False, 'message': 'Email already used'})
+        
+        # Insert new user into the database
+        # Get max uid and add 1 to get new id for user
+        cursor.execute("SELECT MAX(id) FROM users;")
+        uid = cursor.fetchall()[0][0] + 1
+        cursor.execute("INSERT INTO users (id, name, mail, password) VALUES (%s, %s, %s, %s)", (uid, name, mail, password))
         conn.commit()
         cursor.close()
         conn.close()
+
+        # Redirect to a success page or perform any other action
+        return jsonify({'redirect': True})
+
     return render_template('signup.html')
 
 @app.route('/train/<name>', methods=["GET", "POST"])
@@ -184,7 +199,7 @@ def train_view(name):
         text = request.form.get("freviewtext")
         rating = request.form.get('fscore')
         query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
-        cursor.execute(query, (100, train_id, rating, text))
+        cursor.execute(query, (current_user.get_id(), train_id, rating, text))
         conn.commit()
         cursor.close()
         conn.close()
