@@ -69,7 +69,7 @@ def index():
     # get the trains ordered by rating
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute(f"SELECT name, operators, family, picture FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY r.round DESC nulls last;")
+    cursor.execute(f"SELECT name, operators, family, picture, round AS rating FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY r.round DESC nulls last;")
     results = cursor.fetchall()
     cursor.close()
     connection.close()    
@@ -102,9 +102,25 @@ def render_table():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Execute a query to retrieve data from the table
-    cursor.execute('SELECT * FROM trains')
+    # Get the sorting option from the request parameters
+    sort_option = request.args.get('sort', 'default')
 
+    # Build the SQL query with the sorting option
+    if sort_option == 'train_name':
+        query = 'SELECT * FROM trains ORDER BY name'
+    elif sort_option == 'max_op_speed':
+        query = 'SELECT * FROM trains ORDER BY max_speed_operational DESC NULLS LAST'
+    elif sort_option == 'max_design_speed':
+        query = 'SELECT * FROM trains ORDER BY max_speed_design DESC NULLS LAST'
+    elif sort_option == 'max_speed_record':
+        query = 'SELECT * FROM trains ORDER BY max_speed_record DESC NULLS LAST'
+    elif sort_option == 'year_in_service':
+        query = 'SELECT * FROM trains ORDER BY in_service DESC NULLS LAST'
+    else:
+        query = 'SELECT * FROM trains'
+
+    # Execute the SQL query
+    cursor.execute(query)
     # Fetch all rows from the result set
     rows = cursor.fetchall()
 
@@ -190,9 +206,9 @@ def train_view(name):
     comments = [review[2] for review in reviews]
 
     # get average rating of the train
-    query = sql.SQL("""SELECT AVG(rating) FROM reviews WHERE tid = %s;""").format()
+    query = sql.SQL("""SELECT ROUND(AVG(rating),2) FROM reviews WHERE tid = %s;""").format()
     cursor.execute(query, [train_id])
-    avg_rating = round(cursor.fetchall()[0][0],1)
+    avg_rating = cursor.fetchall()[0][0]
     cursor.close()
     conn.close()
 

@@ -2,8 +2,6 @@
 
 {% block content %}
 <div class="container">
-    <h1>Train Search</h1>
-
     <form class="search-form" method="POST" action="{{ url_for('index') }}">
         <input class="search-input" type="text" name="search" placeholder="Search for trains">
         <button class="search-button" type="submit">Search</button>
@@ -26,7 +24,7 @@
                 <tr>
                     {% for column in row %}
                         {% if loop.index0 == column_with_image_index %} {# Specify the column index where the image URLs are stored, starting from 0 #}
-                            <td><img src="static/{{ column }}" alt="Image"></td>
+                            <td><img src="static/{{ column }}" alt="Image" width="200px"></td>
                         {% elif loop.index0 == column_with_train_name_index %} {# Specify the column index where the train names are stored, starting from 0 #}
                             <td><a href="{{ url_for('train_view', name=column) }}">{{ column }}</a></td>
                         {% else %}
