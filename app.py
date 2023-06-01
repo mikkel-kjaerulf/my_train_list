@@ -161,6 +161,8 @@ def train_view(name):
     # Establish a connection to the PostgreSQL database
     conn = get_db_connection()
     cursor = conn.cursor()
+
+    # get train info
     cursor.execute("SELECT * FROM trains WHERE trains.name = '%s';" % (name) )    
     row = cursor.fetchall()
     train_id = row[0][0]
@@ -182,25 +184,45 @@ def train_view(name):
     cursor = conn.cursor()
     cursor.execute("SELECT u.name, r.rating, r.comment FROM users u RIGHT JOIN reviews r ON r.uid = u.id WHERE r.tid = %s;" % (train_id) )
     reviews = cursor.fetchall()
-    cursor.close()
-    conn.close()
-
     usernames = [review[0] for review in reviews]
     ratings = [review[1] for review in reviews]
     comments = [review[2] for review in reviews]
 
+    # get average rating of the train
+    query = sql.SQL("""SELECT AVG(rating) FROM reviews WHERE tid = %s;""").format()
+    cursor.execute(query, [train_id])
+    avg_rating = round(cursor.fetchall()[0][0],1)
+    cursor.close()
+    conn.close()
 
     # We need to do something about this method to not allow users to a review multiple times on the same train
     # otherwise we get an error
     if request.method == "POST":
+        if not current_user.is_authenticated:
+            return redirect('/signup')
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        text = request.form.get("freviewtext")
+        # get typed comment and rating
+        comment = request.form.get("freviewtext")
         rating = request.form.get('fscore')
-        query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
-        cursor.execute(query, (current_user.get_id(), train_id, rating, text))
-        conn.commit()
+
+        # check if user has already left a review for this train
+        query = sql.SQL("""SELECT COUNT(1) FROM reviews WHERE tid = %s AND uid = %s;""")
+        cursor.execute(query, [train_id, current_user.get_id()])
+        res = cursor.fetchall()[0][0]
+
+        # if user has not left a review, insert into table
+        if (res == 0):
+            query = sql.SQL("""INSERT INTO reviews (uid, tid, rating, comment) VALUES (%s, %s, %s, %s)""").format()
+            cursor.execute(query, (current_user.get_id(), train_id, rating, comment))
+            conn.commit()
+        # if user has left a review, update it
+        else:   
+            query = sql.SQL("""UPDATE reviews SET rating = %s, comment = %s WHERE tid = %s AND uid = %s;""").format()
+            cursor.execute(query, (rating, comment, train_id, current_user.get_id()))     
+            conn.commit()
+        
         cursor.close()
         conn.close()
 
@@ -221,7 +243,8 @@ def train_view(name):
         picture = train_picture,
         usernames = usernames,
         ratings = ratings,
-        comments = comments)
+        comments = comments,
+        avg_rating = avg_rating)
 
 if __name__ == '__main__':
     app.run(debug = True)
