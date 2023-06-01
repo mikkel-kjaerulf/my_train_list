@@ -1,18 +1,29 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import LoginManager
 from psycopg2 import sql
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, login_user, logout_user, login_required, current_user
 import psycopg2
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '9a37a774ca5dbe2483735f81cf2cb47fad30382409ddbe8d4b944c9f4b981008'
-#bcrypt = Bcrypt(app)
+app.config['SECRET_KEY'] = 'trust me bro'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:2903@localhost:5432/postgres'
+db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    mail = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255))
+
+
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.get(int(user_id))
 
 # Configure the database connection
 def get_db_connection():
@@ -25,8 +36,27 @@ def get_db_connection():
     )
     return connection
 
-#@app.route('/login', methods=['GET', 'POST'])
-#def login():
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect('/')  # Redirect to another page (e.g., dashboard) if user is already logged in
+    
+    if request.method == 'POST':
+        mail = request.form['mail']
+        password = request.form['password']
+        user = User.query.filter_by(mail=mail).first()
+        if user and user.password == password:
+            login_user(user)
+            return jsonify({'redirect': True})  # Return JSON response for successful login
+        else:
+            return jsonify({'redirect': False, 'message': 'Invalid mail or password'})  # Return JSON response for unsuccessful login
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 @app.route('/', methods=['GET', 'POST'])

@@ -1,20 +1,85 @@
 
-    <!DOCTYPE html>
-    <html>
+<!DOCTYPE html>
+<html>
     <head>
         <title>Train Listing</title>
-        <!-- Add your CSS stylesheets and other static files here -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <style>
+                        /* Style the form */
+            form {
+                max-width: 400px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            label {
+                display: block;
+                margin-bottom: 10px;
+                color: #333;
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                margin-bottom: 20px;
+            }
+
+            input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                background-color: #2196f3;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #0c7cd5;
+            }
+
+            /* Style the modal */
+            .modal-body {
+                color: #333;
+            }
+
+        </style>
     </head>
     <body>
-        <form action="{{ url_for('signup')}}" method="post">
+        <h1>SignUp</h1>
+
+        <div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errorMessage"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="{{ url_for('signup')}}" method="post" id="loginForm">
             <label for="name">Name:</label>
             <input type="text" id="name" name="fname" placeholder="name">
             <label for="email">Email:</label>
             <input type="text" id="email" name="femail" placeholder="email">
             <label for="password">Password:</label>
             <input type="text" id="password" name="fpassword" placeholder="password">
-            <button type="submit">Sign Up</button>
+            <input type="submit" value="SignUp">
         </form>
         
     </body>
-    </html>
+</html>
