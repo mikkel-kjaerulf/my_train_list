@@ -86,7 +86,8 @@
     <h1>Train Information</h1>
 
     <div class="train-card">
-        <img src="{{ url_for('static', filename=picture) }}" alt="Train Image">
+        <div class="trainview-info">
+        <img src="{{ url_for('static', filename=picture) }}" alt="Train Image" class="trainview_image">
 
         <table>
             <tr>
@@ -126,6 +127,7 @@
                 <td>{{ in_service  }}</td>
             </tr>
         </table>
+        </div>
         <form method="post">
             <div class="add-button">
                 {% if in_user_list %}

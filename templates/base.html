@@ -11,6 +11,7 @@
 
         <div class="signlinks">
             {% if current_user.is_authenticated %}
+                <a href="/list/{{ current_user.name }}" class="profile-link">My List</a>
                 <a href="/logout" class="logout-link">Logout</a>
             {% else %}
                 <a href="/signup" class="signup-link">Sign Up</a>

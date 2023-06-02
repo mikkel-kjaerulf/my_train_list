@@ -265,13 +265,19 @@
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
-        z-index: 3; /* Set a high value for z-index */
+        z-index: 10; /* Set a high value for z-index */
         visibility: hidden;
         transition: all 0.3s ease;
         transform: scale(0.9); /* Added scaling effect */
       }
       
       .grid-item:hover .card {
+        left: 100%;
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1); /* Scale back to original size on hover */
+      }
+      .list-item:hover .card {
         left: 100%;
         opacity: 1;
         visibility: visible;
@@ -318,27 +324,126 @@
       }
       
       .list-item {
+        margin-top: 4px;
         display: flex;
         align-items: center;
         padding: 10px;
-        border-bottom: 1px solid #ccc;
+        text-decoration: none;
+        background-color: #fff;
+        border-radius: 10px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+      }
+
+
+      .list-item .card {
+        position: absolute;
+        padding: 0;
+        width: 250px;
+        left: -250px;
+        top: auto;
+        bottom: auto;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 10; /* Set a high value for z-index */
+        transform: scale(0.9); /* Added scaling effect */
+      }
+
+      .list-item:hover .card {
+        left: -250px;
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1); /* Adjust scale and position */
+        overflow: hidden;
+      }
+    
+      .card-image {
+        width: 100%;
+        object-fit: cover;
+        object-position: bottom; /* Center the image within the container */
+        border-radius: 5px; /* Add border-radius to make the card corners rounded */
       }
       
-      .list-image {
+      
+    .list-image {
         width: 55px;
         height: 55px;
         margin-right: 10px;
         border-radius: 10%;
-        margin-top: 10px;
+        margin-top: 0px;
       }
 
       /* Align rating to the right */
     .list-item .rating-container {
         margin-left: auto;
+        margin-top: 0px;
         
     }
-    .list-item .h2 {
-        margin-left: auto;
+    .list-item .information {
+        margin-left: 10px;
+        margin-top: 0px;
+        color: #343434de;
+        font-size: small;
+    }
+    .list-item a {
         /* remove underline from hyperlink */
         text-decoration: none;
     }
+    .list-item .rating-square {
+        position: relative;
+        width: 55px;
+        height: 55px;
+        border-radius: 10%;
+        margin-top: 0px;
+      }
+      
+      .trainview_image {
+        width: 40%;
+        height: auto;
+        border-radius: 5px;
+        margin-top: 10px;
+        object-fit: cover; /* Crop the image to fit the specified height */
+        z-index: 2; /* Set a high z-index value to the grid container */
+        /* make shadows appear behind the image */
+        box-shadow: 0 0 9px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+      }
+
+      .trainview-info {
+        display: flex;
+        align-items: flex-start; /* Align items at the top */
+      }
+
+      .trainview-info table {
+        width: 40%;
+        margin-left: 20px;
+        border-collapse: collapse;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+    }
+    
+    .trainview-info table td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+    
+    .trainview-info table td:first-child {
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .trainview-info table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .trainview-info table tr:hover {
+        background-color: #f5f5f5;
+    }
+    

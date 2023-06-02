@@ -9,7 +9,7 @@
         {% for row in rows %}
             <div class="grid-item">
                 <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}">
-                    <img class="grid-image" src="static/{{ row[column_with_image_index] }}" alt="Image">
+                    <img class="grid-image" src="static/lowres_images/{{ row[column_with_image_index] }}" alt="Image">
                 </a>
                 <div class="card">
                     <table>  <!-- Add a table to create columns -->

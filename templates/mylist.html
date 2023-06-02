@@ -7,22 +7,24 @@
 
     <div class="list-table">
         {% for row in rows %}
-            <div class="list-item">
-                <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}">
-                    <img class="list-image" src="/static/{{ row[column_with_image_index] }}" alt="Image">
-                    <h2>{{ row[column_with_train_name_index] }}</h2>
-                    <div class="rating-container">
-                        <div class="rating-square", id="indicator_{{loop.index0}}">
-                          <span class="rating-score">{{row[rating_index]}}</span>
-                    </div>
-                </a>
-                <div class="card">
-                    <img class="list-image" src="static/{{ row[column_with_image_index] }}" alt="Image">
-                    </div>
+        <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}" class="list-item">
+            <img class="list-image" src="/static/{{ row[column_with_image_index] }}" alt="Image">
+            <div class="information">
+                <h2>{{ row[column_with_train_name_index] }}</h2>
+            </div>
+            <div class="rating-container">
+                <div class="rating-square" id="indicator_{{loop.index0}}">
+                    <span class="rating-score">{{row[rating_index]}}</span>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+            <div class="card">
+                <img class="card-image" src="/static/{{ row[column_with_image_index] }}" alt="Image">
+            </div>
+        
+    </a>
+    {% endfor %}
+</div>
+    
 </div>
 
 <script>
@@ -78,29 +80,6 @@
     
         return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
     }
-    function positionCard() {
-  const gridItems = document.querySelectorAll('.grid-item');
-
-  gridItems.forEach((item) => {
-    const card = item.querySelector('.card');
-    const rect = item.getBoundingClientRect();
-    const spaceLeft = rect.left;
-    const spaceRight = window.innerWidth - rect.right;
-
-    if (spaceRight < card.offsetWidth) {
-      console.log('left');
-      card.style.left = 'auto';
-      card.style.right = '100%';
-    } else {
-      console.log('else');
-      card.style.left = '110%';
-      card.style.right = 'auto';
-    }
-  });
-}
-
-window.addEventListener('resize', positionCard);
-positionCard();
 
 </script>
 
