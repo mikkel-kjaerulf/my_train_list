@@ -82,6 +82,17 @@ def index():
 
     return render_template('index.html', rows=results, headers=headers, column_with_image_index=3, column_with_train_name_index=0, rating=rating)
 
+@app.route('/users', methods=['GET', 'POST'])
+def users():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT name FROM users;")
+    results = cursor.fetchall()
+    cursor.close()
+    connection.close() 
+
+    return render_template('users.html', users=results)
+
 @app.route('/list/<name>', methods=['GET', 'POST'])
 def mylist(name):
     if request.method == 'POST':

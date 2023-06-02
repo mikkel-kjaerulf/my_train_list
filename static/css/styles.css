@@ -542,4 +542,8 @@
     .user-review p strong {
       color: #ff8800;
     }
+
+    .userlist td a:hover {
+        text-decoration: none; /* Remove underline on hover */
+    }
     

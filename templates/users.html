@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table>
+    <tbody class="userlist">
+        {% for user in users %}
+        <tr>
+            <td>
+                <a href="{{ url_for('mylist', name=user[0]) }}">
+                    {{ user[0] }}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+{% endblock %}
