@@ -77,7 +77,10 @@ def index():
     # get the header
     headers = [desc[0] for desc in cursor.description]
 
-    return render_template('index.html', rows=results, headers=headers, column_with_image_index=3, column_with_train_name_index=0)
+    # get the rating based on the header
+    rating = headers.index('rating')
+
+    return render_template('index.html', rows=results, headers=headers, column_with_image_index=3, column_with_train_name_index=0, rating=rating)
 
 @app.route('/search')
 def search():
