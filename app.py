@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import LoginManager
 from psycopg2 import sql
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, logout_user, login_required, current_user
 import psycopg2
 
@@ -29,17 +28,33 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
-class User(db.Model, UserMixin):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
-    mail = db.Column(db.String(255), unique=True)
-    password = db.Column(db.String(255))
+# Create the User class usermixing from flask_login
+class User(UserMixin):
+    def __init__(self, user):
+        self.id = user[0]
+        self.name = user[1]
+        self.mail = user[2]
+        self.password = user[3]
+
+    def __repr__(self):
+        return f'<User: {self.name}>'
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    conn = psycopg2.connect(host=db_host, port=db_port, database=db_name, user=db_user, password=db_password)
+    cursor = conn.cursor()
+    
+    query = "SELECT id, name, mail, password FROM users WHERE id = %s"
+    cursor.execute(query, (user_id,))
+    result = cursor.fetchone()
+    
+    if result is not None:
+        user_id, name, mail, password = result
+        user = User([user_id, name, mail, password])
+        return user
+    
+    conn.close()
 
 # Configure the database connection
 def get_db_connection():
@@ -58,10 +73,18 @@ def login():
         return redirect('/')  # Redirect to another page (e.g., dashboard) if user is already logged in
     
     if request.method == 'POST':
+
+        # open connection to the database
+        connection = get_db_connection()
+        cursor = connection.cursor()  
         mail = request.form['mail']
         password = request.form['password']
-        user = User.query.filter_by(mail=mail).first()
-        if user and user.password == password:
+        # get user with the same mail and check if the password is correct
+        query = "SELECT id, name, mail, password FROM users WHERE mail = %s"
+        cursor.execute(query, (mail,))
+        result = cursor.fetchone()
+        if result and result[3] == password:
+            user = User(result)
             login_user(user)
             return jsonify({'redirect': True})  # Return JSON response for successful login
         else:
@@ -219,11 +242,19 @@ def signup():
 
         # Check if email already exists in the database
         cursor.execute("SELECT * FROM users WHERE mail = %s", (mail,))
-        existing_user = cursor.fetchone()
+        existing_user_mail = cursor.fetchone()
 
-        if existing_user:
+        # check if name already exists in the database
+        cursor.execute("SELECT * FROM users WHERE name = %s", (name,))
+        existing_user_name = cursor.fetchone()
+
+        if existing_user_mail:
             # Display popup message if email already exists
             return jsonify({'redirect': False, 'message': 'Email already used'})
+        
+        if existing_user_name:
+            # Display popup message if name already exists
+            return jsonify({'redirect': False, 'message': 'Name already used'})
         
         # Insert new user into the database
         # Get max uid and add 1 to get new id for user
@@ -234,7 +265,7 @@ def signup():
         cursor.close()
         conn.close()
         
-        login_user(User.query.filter_by(mail=mail).first())
+        login_user(User([uid, name, mail, password]))
         # Redirect to a success page or perform any other action
         return jsonify({'redirect': True})
 

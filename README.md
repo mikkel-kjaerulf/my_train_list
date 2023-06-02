@@ -14,9 +14,6 @@ This is a Flask web application that requires an SQL database and a configuratio
    ```
    pip install psycopg2
    ```
-   ```
-   pip install SQLAlchemy
-   ```
 
 2. Set up your SQL database: Before starting the Flask app, you need to import the `train_list.sql` file into your SQL server. The specific steps depend on the database management system (DBMS) you're using. For example, if you're using PostgreSQL you can use the `psql` command-line tool to import the SQL file:
    ```
