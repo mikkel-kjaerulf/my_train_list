@@ -5,9 +5,25 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, logout_user, login_required, current_user
 import psycopg2
 
+import configparser
+
+# Read the configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# Get the database credentials from the configuration file
+db_host = config['Database']['host']
+db_port = config['Database']['port']
+db_name = config['Database']['database']
+db_user = config['Database']['user']
+db_password = config['Database']['password']
+
+# Construct the SQLALCHEMY_DATABASE_URI
+db_uri = f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'trust me bro'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:2903@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -28,11 +44,11 @@ def load_user(user_id):
 # Configure the database connection
 def get_db_connection():
     connection = psycopg2.connect(
-        port=5432,
-        host="localhost",
-        database="postgres",
-        user="postgres",
-        password="2903"
+        port=db_port,
+        host=db_host,
+        database=db_name,
+        user=db_user,
+        password=db_password
     )
     return connection
 
@@ -347,4 +363,4 @@ def train_view(name):
         in_user_list = in_user_list)
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = False)

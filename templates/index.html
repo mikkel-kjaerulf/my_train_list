@@ -2,6 +2,12 @@
 
 {% block content %}
 
+<script>
+    function replaceImage(img) {
+    img.src = '/static/placeholder.jpg';  // Set the path to your placeholder image
+    }
+</script>
+
 <div class="topt-container">
     <h1>Top Trains</h1>
 
@@ -34,9 +40,6 @@
 </div>
 
 <script>
-    function replaceImage(img) {
-    img.src = '/static/placeholder.jpg';  // Set the path to your placeholder image
-    }
     // Retrieve all the rating containers
     var ratingContainers = document.getElementsByClassName('rating-square');
 

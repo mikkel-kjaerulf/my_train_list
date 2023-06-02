@@ -8,7 +8,7 @@
     <div class="list-table">
         {% for row in rows %}
         <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}" class="list-item">
-            <img class="list-image" src="/static/{{ row[column_with_image_index] }}" alt="Image">
+            <img class="list-image" src="/static/images_thumb/{{ row[column_with_image_index] }}" alt="Image">
             <div class="information">
                 <h2>{{ row[column_with_train_name_index] }}</h2>
             </div>
