@@ -546,4 +546,7 @@
     .userlist td a:hover {
         text-decoration: none; /* Remove underline on hover */
     }
-    
+    .usearch-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }

@@ -84,6 +84,19 @@ def index():
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
+
+    # get users by name if search is performed
+    if request.method == 'POST':
+        search_query = request.form.get('search')
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT name FROM users WHERE name ILIKE '%{search_query}%';")
+        results = cursor.fetchall()
+        cursor.close()
+        connection.close() 
+        return render_template('users.html', users=results)
+
+
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute(f"SELECT name FROM users;")
