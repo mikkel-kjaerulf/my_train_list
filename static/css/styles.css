@@ -268,12 +268,14 @@
         z-index: 3; /* Set a high value for z-index */
         visibility: hidden;
         transition: all 0.3s ease;
+        transform: scale(0.9); /* Added scaling effect */
       }
       
       .grid-item:hover .card {
         left: 100%;
         opacity: 1;
         visibility: visible;
+        transform: scale(1); /* Scale back to original size on hover */
       }
       
       .card h3 {
@@ -315,3 +317,28 @@
         text-align: center;
       }
       
+      .list-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+      
+      .list-image {
+        width: 55px;
+        height: 55px;
+        margin-right: 10px;
+        border-radius: 10%;
+        margin-top: 10px;
+      }
+
+      /* Align rating to the right */
+    .list-item .rating-container {
+        margin-left: auto;
+        
+    }
+    .list-item .h2 {
+        margin-left: auto;
+        /* remove underline from hyperlink */
+        text-decoration: none;
+    }

@@ -82,6 +82,30 @@ def index():
 
     return render_template('index.html', rows=results, headers=headers, column_with_image_index=3, column_with_train_name_index=0, rating=rating)
 
+@app.route('/list/<name>', methods=['GET', 'POST'])
+def mylist(name):
+    if request.method == 'POST':
+        search_query = request.form.get('search')
+        return redirect(url_for('search', query=search_query))
+
+
+    # get the trains by user
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT t.name, t.picture, r.rating FROM trains AS t RIGHT JOIN listed_trains AS lt ON t.id = lt.tid LEFT JOIN reviews AS r ON r.tid=lt.tid AND r.uid = lt.uid  WHERE lt.uid = (SELECT u.id FROM users u WHERE u.name='{name}');")
+    results = cursor.fetchall()
+    cursor.close()
+    connection.close()    
+
+    # get the header
+    headers = [desc[0] for desc in cursor.description]
+
+    # get the rating based on the header
+    rating = headers.index('rating')
+
+    return render_template('mylist.html', rows=results, headers=headers, column_with_image_index=1, column_with_train_name_index=0, name=name, rating_index=rating)
+
+
 @app.route('/search')
 def search():
     query = request.args.get('query')
