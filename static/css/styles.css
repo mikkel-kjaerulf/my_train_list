@@ -561,3 +561,12 @@
     .logo-link:hover {
         outline: none; /* Remove blue overlay */
     }
+
+    .signupin h1{
+      margin-top: 20px;
+      margin-bottom: 20px;
+      margin-right: auto;
+      margin-left: auto;
+      text-align: center;
+      color: #ffffffde;
+    }
