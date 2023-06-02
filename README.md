@@ -32,4 +32,6 @@ This is a Flask web application that requires an SQL database and a configuratio
  ### Images
 ![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/5a12c5fd-8f13-4318-833e-26a65c3c3ac4)
 ![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/6bc2c031-0a48-4a6a-9745-d63cce46dc30)
+![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/dbf234f5-02de-4fab-b1be-5f4ff8658a7d)
+
 
