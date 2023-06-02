@@ -28,7 +28,7 @@
                     <tr>
                         {% for column in row %}
                             {% if loop.index0 == column_with_image_index %} {# Specify the column index where the image URLs are stored, starting from 0 #}
-                                <td><img src="static/images_thumb/{{ column }}" alt="Image" width="200"></td>
+                                <td><img src="static/images_thumb/{{ column }}" alt="Image" width="200" onerror="replaceImage(this)"></td>
                             {% elif loop.index0 == column_with_train_name_index %} {# Specify the column index where the train names are stored, starting from 0 #}
                                 <td><a href="{{ url_for('train_view', name=column) }}">{{ column }}</a></td>
                             {% else %}
@@ -68,5 +68,9 @@
             // Redirect to the URL with the selected sorting option
             window.location.href = "/table?sort=" + selectedValue;
         }
+
+        function replaceImage(img) {
+    img.src = '/static/placeholder.jpg';  // Set the path to your placeholder image
+    }
     </script>
 {% endblock %}

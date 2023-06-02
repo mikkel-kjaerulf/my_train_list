@@ -87,7 +87,7 @@
 
     <div class="train-card">
         <div class="trainview-info">
-        <img src="{{ url_for('static', filename=picture) }}" alt="Train Image" class="trainview_image">
+        <img src="{{ url_for('static', filename=picture) }}" alt="Train Image" class="trainview_image" onerror="replaceImage(this)">
 
         <table>
             <tr>
@@ -182,4 +182,9 @@
             {% endfor %}
         </div>
     </div>
+    <script>
+        function replaceImage(img) {
+    img.src = '/static/placeholder.jpg';  // Set the path to your placeholder image
+    }
+    </script>
     {% endblock %}

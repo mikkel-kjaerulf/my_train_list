@@ -9,7 +9,7 @@
         {% for row in rows %}
             <div class="grid-item">
                 <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}">
-                    <img class="grid-image" src="static/lowres_images/{{ row[column_with_image_index] }}" alt="Image">
+                    <img class="grid-image" src="static/lowres_images/{{ row[column_with_image_index] }}" alt="Image" onerror="replaceImage(this)">
                 </a>
                 <div class="card">
                     <table>  <!-- Add a table to create columns -->
@@ -34,6 +34,9 @@
 </div>
 
 <script>
+    function replaceImage(img) {
+    img.src = '/static/placeholder.jpg';  // Set the path to your placeholder image
+    }
     // Retrieve all the rating containers
     var ratingContainers = document.getElementsByClassName('rating-square');
 
@@ -96,11 +99,9 @@
     const spaceRight = window.innerWidth - rect.right;
 
     if (spaceRight < card.offsetWidth) {
-      console.log('left');
       card.style.left = 'auto';
       card.style.right = '100%';
     } else {
-      console.log('else');
       card.style.left = '110%';
       card.style.right = 'auto';
     }
