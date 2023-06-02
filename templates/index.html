@@ -1,14 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <form class="search-form" method="POST" action="{{ url_for('index') }}">
-        <input class="search-input" type="text" name="search" placeholder="Search for trains">
-        <button class="search-button" type="submit">Search</button>
-    </form>
-</div>
 
-<div class="container">
+<div class="topt-container">
     <h1>Top Trains</h1>
 
     <div class="grid">
@@ -102,12 +96,11 @@
     const spaceRight = window.innerWidth - rect.right;
 
     if (spaceRight < card.offsetWidth) {
+      console.log('left');
       card.style.left = 'auto';
       card.style.right = '100%';
-    } else if (spaceLeft < card.offsetWidth) {
-      card.style.left = '0';
-      card.style.right = 'auto';
     } else {
+      console.log('else');
       card.style.left = '110%';
       card.style.right = 'auto';
     }
