@@ -30,7 +30,7 @@ This is a Flask web application that requires an SQL database and a configuratio
    Flask will start a local server, and you can access your web application by visiting the provided URL (usually http://localhost:5000).
    
  ### ER-Diagram for the database:
- ![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/b127d2e7-7e58-424b-ac6c-9dfdeef8a873)
+ ![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/b3c949d7-9f6b-43ef-a246-3cf6593bffc9)
  
  ### Images
 ![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/5a12c5fd-8f13-4318-833e-26a65c3c3ac4)
