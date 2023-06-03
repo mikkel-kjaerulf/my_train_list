@@ -23,7 +23,6 @@ db_uri = f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'trust me bro'
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
