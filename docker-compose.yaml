@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./services/web
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./services/web/:/usr/src/app/
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+    network_mode: host
+  db:
+    image: postgres:13
+    volumes:
+      - ./services/web/train_list.sql:/docker-entrypoint-initdb.d/train_list.sql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2903
+      - POSTGRES_DB=postgres
+    ports:
+    - 5432:5432
+
+volumes:
+  postgres_data:

@@ -1,0 +1,13 @@
+<div class="navbar">
+    
+    <a href="/">Home</a>
+    <!-- <a href="/search">Search</a> -->
+    <a href="/table">Table</a>
+    <a href="/users">Users</a>
+    <div class="navbar-search">
+        <form class="search-form" method="POST" action="{{ url_for('index') }}">
+            <input class="search-input" type="text" name="search" placeholder="Search for trains">
+            <button class="search-button" type="submit">Search</button>
+        </form>
+    </div>
+</div>
