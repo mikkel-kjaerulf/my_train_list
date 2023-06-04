@@ -4,12 +4,12 @@ This is a Flask web application that requires an SQL database and a configuratio
 
 ### Setup Instructions
    If you have Docker-Compose installed, initializing this webserver is a two-liner. Navigate to the root folder of this repository, and run:
-      ```
-      sudo docker compose build
-      ```
-      ```
-      sudo docker-compose up -d
-      ```
+   ```
+   sudo docker compose build
+   ```
+   ```
+   sudo docker-compose up -d
+   ```
    If you dont have Docker-Compose, keep reading.
 
 
