@@ -3,12 +3,19 @@ from flask_login import LoginManager
 from psycopg2 import sql
 from flask_login import UserMixin, login_user, logout_user, login_required, current_user
 import psycopg2
+import os
 
 import configparser
 
+# Get the directory of the Flask app
+app_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to the config.ini file relative to the app directory
+config_file_path = os.path.join(app_dir, 'config.ini')
+
 # Read the configuration file
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(config_file_path)
 
 # Get the database credentials from the configuration file
 db_host = config['Database']['host']
@@ -392,3 +399,7 @@ def train_view(name):
         comments = comments,
         avg_rating = avg_rating,
         in_user_list = in_user_list)
+
+# run server if this file is run directly
+if __name__ == '__main__':
+    app.run(debug=True)
