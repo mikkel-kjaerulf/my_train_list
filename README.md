@@ -34,7 +34,7 @@ This is a Flask web application that requires an SQL database and a configuratio
   
 4. Run the Flask app: To start your Flask app, run the `/services/web/project/__init__.py` file:
    ```
-   python /services/web/__init__.py
+   python /services/web/project/__init__.py
    ```
    Flask will start a local server, and you can access your web application by visiting the provided URL (usually http://localhost:5000).
    
