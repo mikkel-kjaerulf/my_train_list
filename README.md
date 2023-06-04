@@ -32,7 +32,7 @@ This is a Flask web application that requires an SQL database and a configuratio
 
 3. Edit the configuration file `config.ini` in the `/services/web/project` folder and provide the necessary SQL database information in it.
   
-4. Run the Flask app: To start your Flask app, run the `/services/web/project/__init__.py` file:
+4. Run the Flask app: To start your Flask app, run the `__init__.py` file in the `/services/web/project/` folder:
    ```
    python /services/web/project/__init__.py
    ```
