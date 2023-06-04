@@ -10,7 +10,7 @@ This is a Flask web application that requires an SQL database and a configuratio
    ```
    sudo docker-compose up -d
    ```
-   If you dont have Docker-Compose, keep reading.
+   If you dont have Docker-Compose, please follow the following instructions.
 
 
 1. Install Flask and other dependencies: Make sure you have the dependencies installed in your Python environment. You can install it using `pip` by running:
@@ -30,11 +30,11 @@ This is a Flask web application that requires an SQL database and a configuratio
    ```
    Replace `<username>` with your PostgreSQL username, `<database_name>` with the name of your database, and `train_list.sql` with the appropriate path to the SQL file.
 
-3. Edit the configuration file: In the root folder there is a `config.ini` file and provide the necessary SQL database information in it.
+3. Edit the configuration file `config.ini` in the `/services/web/project` folder and provide the necessary SQL database information in it.
   
-4. Run the Flask app: To start your Flask app, run the `/services/web/manage.py` file:
+4. Run the Flask app: To start your Flask app, run the `__init__.py` file in the `/services/web/project/` folder:
    ```
-   python /services/web/manage.py
+   python /services/web/project/__init__.py
    ```
    Flask will start a local server, and you can access your web application by visiting the provided URL (usually http://localhost:5000).
    
