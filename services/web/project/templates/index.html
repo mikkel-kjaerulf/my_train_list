@@ -8,38 +8,116 @@
     }
 </script>
 
+<h1>TOP TRAINS</h1>
 <div class="topt-container">
-    <h1>Top Trains</h1>
 
-    <div class="grid">
-        {% for row in rows %}
-            <div class="grid-item">
+    <button class="scroll-button left-button">&lt;</button>
+    <ul class="grid">
+        {% for row in top_rows %}
+            <li class="grid-item">
                 <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}">
                     <img class="grid-image" src="static/lowres_images/{{ row[column_with_image_index] }}" alt="Image" onerror="replaceImage(this)">
                 </a>
                 <div class="card">
-                    <table>  <!-- Add a table to create columns -->
+                      <div class="card-body">
                         {% for column in row %}
-                            {% if not loop.index0 == column_with_image_index and not loop.index0 == rating %}
-                                <tr>
-                                    <td>{{ headers[loop.index0]}}:</td>  <!-- Create a new column for the header -->
-                                    <td>{{ column }}</td>  <!-- Create a new column for the value -->
-                                </tr>
+                            {% if headers[loop.index0] == "name" %}
+                                    <h4>{{ column }}</h4>  <!-- Create a new column for the value -->
+                            {% elif headers[loop.index0] == "family" %}
+                                    <h5>{{ column }}</h5>  <!-- Create a new column for the value -->
+                            {% elif headers[loop.index0] == "operators" %}
+                                    <h5>{{ column }}</5>
                             {% endif %}
                         {% endfor %}
-                    </table>
+                      </div>
                     <div class="rating-container">
                         <div class="rating-square", id="indicator_{{loop.index0}}">
                           <span class="rating-score">{{row[rating]}}</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </li>
         {% endfor %}
-    </div>
+    </ul>
+    <button class="scroll-button right-button">&gt;</button>
 </div>
 
+
+<h1>TRAINS BY RECORD SPEED</h1>
+<div class="topt-container">
+
+    <button class="scroll-button left-button">&lt;</button>
+    <ul class="grid">
+        {% for row in rspeed_rows %}
+            <li class="grid-item">
+                <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}">
+                    <img class="grid-image" src="static/lowres_images/{{ row[column_with_image_index] }}" alt="Image" onerror="replaceImage(this)">
+                </a>
+                <div class="card">
+                      <div class="card-body">
+                        {% for column in row %}
+                            {% if headers[loop.index0] == "name" %}
+                                    <h4>{{ column }}</h4>  <!-- Create a new column for the value -->
+                            {% elif headers[loop.index0] == "family" %}
+                                    <h5>{{ column }}</h5>  <!-- Create a new column for the value -->
+                            {% elif headers[loop.index0] == "operators" %}
+                                    <h5>{{ column }}</5>
+                            {% endif %}
+                        {% endfor %}
+                      </div>
+                    <div class="rating-container">
+                        <div class="rating-square", id="indicator_{{loop.index0}}">
+                          <span class="rating-score">{{row[rating]}}</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <button class="scroll-button right-button">&gt;</button>
+</div>
+
+<h1>LATEST TRAINS</h1>
+<div class="topt-container">
+
+    <button class="scroll-button left-button">&lt;</button>
+    <ul class="grid">
+        {% for row in latest_rows %}
+            <li class="grid-item">
+                <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}">
+                    <img class="grid-image" src="static/lowres_images/{{ row[column_with_image_index] }}" alt="Image" onerror="replaceImage(this)">
+                </a>
+                <div class="card">
+                      <div class="card-body">
+                        {% for column in row %}
+                            {% if headers[loop.index0] == "name" %}
+                                    <h4>{{ column }}</h4>  <!-- Create a new column for the value -->
+                            {% elif headers[loop.index0] == "family" %}
+                                    <h5>{{ column }}</h5>  <!-- Create a new column for the value -->
+                            {% elif headers[loop.index0] == "operators" %}
+                                    <h5>{{ column }}</5>
+                            {% endif %}
+                        {% endfor %}
+                      </div>
+                    <div class="rating-container">
+                        <div class="rating-square", id="indicator_{{loop.index0}}">
+                          <span class="rating-score">{{row[rating]}}</span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <button class="scroll-button right-button">&gt;</button>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    
     // Retrieve all the rating containers
     var ratingContainers = document.getElementsByClassName('rating-square');
 
@@ -92,27 +170,27 @@
     
         return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
     }
-    function positionCard() {
-  const gridItems = document.querySelectorAll('.grid-item');
+    $(document).ready(function() {
+  $(".left-button").click(function() {
+    var container = $(this).closest('.topt-container'); // Find the closest grid container
+    var grid = container.find('.grid'); // Find the grid within the container
+    var containerWidth = grid.width();
+    var scrollAmount = containerWidth;
 
-  gridItems.forEach((item) => {
-    const card = item.querySelector('.card');
-    const rect = item.getBoundingClientRect();
-    const spaceLeft = rect.left;
-    const spaceRight = window.innerWidth - rect.right;
-
-    if (spaceRight < card.offsetWidth) {
-      card.style.left = 'auto';
-      card.style.right = '100%';
-    } else {
-      card.style.left = '110%';
-      card.style.right = 'auto';
-    }
+    grid.animate({ scrollLeft: "-=" + scrollAmount }, 0);
   });
-}
 
-window.addEventListener('resize', positionCard);
-positionCard();
+  $(".right-button").click(function() {
+    var container = $(this).closest('.topt-container'); // Find the closest grid container
+    var grid = container.find('.grid'); // Find the grid within the container
+    var containerWidth = grid.width();
+    var scrollAmount = containerWidth;
+
+    grid.animate({ scrollLeft: "+=" + scrollAmount }, 0);
+  });
+});
+
+
 
 </script>
 

@@ -117,8 +117,6 @@ def index():
     cursor = connection.cursor()
     cursor.execute(f"SELECT name, operators, family, picture, round AS rating FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY r.round DESC nulls last;")
     results = cursor.fetchall()
-    cursor.close()
-    connection.close()
 
     # get the header
     headers = [desc[0] for desc in cursor.description]
@@ -126,7 +124,20 @@ def index():
     # get the rating based on the header
     rating = headers.index('rating')
 
-    return render_template('index.html', rows=results, headers=headers, column_with_image_index=3, column_with_train_name_index=0, rating=rating)
+    # get the latest trains
+    cursor.execute(f"SELECT name, operators, family, picture, round AS rating FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY t.in_service DESC nulls last LIMIT 20;")
+    lresults = cursor.fetchall()
+
+
+    # get the trains ordered by speed
+    cursor.execute(f"SELECT name, operators, family, picture, round AS rating, max_speed_record as speed FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY t.max_speed_record DESC nulls last LIMIT 20;")
+    rsresults = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+    
+
+    return render_template('index.html', top_rows=results, headers=headers, column_with_image_index=3, rating=rating, latest_rows=lresults, column_with_train_name_index=0, rspeed_rows=rsresults)
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():

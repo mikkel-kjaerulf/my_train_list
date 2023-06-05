@@ -9,10 +9,11 @@
         }
 
         .train-card {
-            background-color: #ffffff;
+            background-color: #f2f2f2;
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
         .train-card img {
@@ -83,9 +84,9 @@
     </style>
 </head>
 <body>
-    <h1>Train Information</h1>
-
+    
     <div class="train-card">
+        <h1>Train Information</h1>
         <div class="trainview-info">
         <img src="{{ url_for('static', filename=picture) }}" alt="Train Image" class="trainview_image" onerror="replaceImage(this)">
 
