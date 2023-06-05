@@ -15,7 +15,7 @@
     }
     
     .content-container {
-        background-color: #c5c8d2;
+        background-color: #FFFDE4;
         padding-top: 20px;
         padding-bottom: 10%;
         margin-bottom: 20px;
@@ -29,7 +29,7 @@
         margin: 10px auto;
         overflow: visible;
         display: flex;
-        height: 250px;
+        height: 200px;
     }
 
     
@@ -303,7 +303,7 @@
     object-fit: cover; /* Crop the image to fit the specified height */
     z-index: 2; /* Set a high z-index value to the grid container */
     /* make shadows appear behind the image */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
   }
 
 
