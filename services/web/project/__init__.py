@@ -133,11 +133,18 @@ def index():
     cursor.execute(f"SELECT name, operators, family, picture, round AS rating, max_speed_record as speed FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid ORDER BY t.max_speed_record DESC nulls last LIMIT 20;")
     rsresults = cursor.fetchall()
 
+    # if user logged in get trains from their list
+    user_logged_in = False
+    uresults = None
+    if current_user.is_authenticated:
+        cursor.execute(f"SELECT name, operators, family, picture, round AS rating FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid WHERE t.id IN (SELECT tid FROM listed_trains WHERE uid = {current_user.id});")
+        uresults = cursor.fetchall()
+        user_logged_in = True
     cursor.close()
     connection.close()
     
 
-    return render_template('index.html', top_rows=results, headers=headers, column_with_image_index=3, rating=rating, latest_rows=lresults, column_with_train_name_index=0, rspeed_rows=rsresults)
+    return render_template('index.html', top_rows=results, headers=headers, column_with_image_index=3, rating=rating, latest_rows=lresults, column_with_train_name_index=0, rspeed_rows=rsresults, user_logged_in=user_logged_in, user_rows=uresults)
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():

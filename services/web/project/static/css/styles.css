@@ -15,16 +15,16 @@
     }
     
     .content-container {
-        background-color: #DDE6ED;
+        background-color: #c5c8d2;
         padding-top: 20px;
         padding-bottom: 10%;
         margin-bottom: 20px;
-        padding-right: 10%;
-        padding-left: 10%;
+        padding-right: 5%;
+        padding-left: 5%;
     }
 
     .topt-container {
-        background-color: #DDE6ED;
+        background-color: #dde6ed00;
         max-width: 1400px;
         margin: 10px auto;
         overflow: visible;
