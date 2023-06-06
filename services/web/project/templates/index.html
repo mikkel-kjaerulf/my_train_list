@@ -8,9 +8,9 @@
     }
 </script>
 
-<h1>TOP TRAINS</h1>
 <div class="topt-container">
-
+    <h1>TOP TRAINS</h1>
+    <div class="grid-container">
     <button class="scroll-button left-button">&lt;</button>
     <ul class="grid">
         {% for row in top_rows %}
@@ -40,14 +40,15 @@
         {% endfor %}
     </ul>
     <button class="scroll-button right-button">&gt;</button>
+    </div>
 </div>
 
 
-<h1>TRAINS BY RECORD SPEED</h1>
 <div class="topt-container">
-
-    <button class="scroll-button left-button">&lt;</button>
-    <ul class="grid">
+<h1>TRAINS BY RECORD SPEED</h1>
+<div class="grid-container">
+<button class="scroll-button left-button">&lt;</button>
+<ul class="grid">
         {% for row in rspeed_rows %}
             <li class="grid-item">
                 <a href="{{ url_for('train_view', name=row[column_with_train_name_index]) }}">
@@ -76,10 +77,11 @@
     </ul>
     <button class="scroll-button right-button">&gt;</button>
 </div>
+</div>
 
-<h1>LATEST TRAINS</h1>
 <div class="topt-container">
-
+    <h1>LATEST TRAINS</h1>
+    <div class="grid-container">
     <button class="scroll-button left-button">&lt;</button>
     <ul class="grid">
         {% for row in latest_rows %}
@@ -109,13 +111,14 @@
         {% endfor %}
     </ul>
     <button class="scroll-button right-button">&gt;</button>
+    </div>
 </div>
 
 {% if user_logged_in %}
 
-<h1>TRAIN ON YOUR LIST</h1>
 <div class="topt-container">
-
+    <h1>TRAIN ON YOUR LIST</h1>
+    <div class="grid-container">
     <button class="scroll-button left-button">&lt;</button>
     <ul class="grid">
         {% for row in user_rows %}
@@ -146,7 +149,7 @@
     </ul>
     <button class="scroll-button right-button">&gt;</button>
 </div>
-
+</div>
 {% endif %}
 
 

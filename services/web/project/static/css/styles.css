@@ -8,14 +8,12 @@
 
     /* Set a background color and font family */
     body {
-        background-color: #526D82;
+        background-color: #e4e4e4;
         font-family: Arial, sans-serif;
-        margin-left: 5%; /* Specify the left margin as 10% */
-        margin-right: 5%; /* Specify the right margin as 10% */
     }
     
     .content-container {
-        background-color: #FFFDE4;
+        background-color: #fffde400;
         padding-top: 20px;
         padding-bottom: 10%;
         margin-bottom: 20px;
@@ -26,10 +24,14 @@
     .topt-container {
         background-color: #dde6ed00;
         max-width: 1400px;
-        margin: 10px auto;
         overflow: visible;
-        display: flex;
         height: 200px;
+        margin: auto;
+        margin-top: 30px;
+    }
+
+    .grid-container {
+      display: flex;
     }
 
     
@@ -79,16 +81,20 @@
     background-color: #27374D;
     overflow: hidden;
     width: 100%;
-    height: 50px;
+    height: 70px;
     }
 
     .navbar a {
     float: left;
+    height: 70px;
     color: rgb(237, 237, 237);
     text-align: center;
+    /* make the text cetnered in vertically*/
+    line-height: 35px;
     padding: 14px 16px;
     text-decoration: none;
     font-weight: bold; 
+    
     }
 
     .navbar a:hover {
@@ -202,14 +208,12 @@
     
     .signlinks a {
         display: inline-block;
-        background-color: #c9c9c942;
+        background-color: #23224248;
         color: #fff;
-        padding: 7px 20px;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
         margin-right: 10px;
-        margin-top: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        line-height: 35px;
     }
     .signlinks a:first-child {
       margin-left: auto; /* Add this line to push the button to the right */

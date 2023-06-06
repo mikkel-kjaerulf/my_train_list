@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
+    <div class="navbar-container">
+        {% include 'navbar.html' %}
+    </div>
     
     <div class="content-container">
     <div class="logo-container">
@@ -19,9 +22,6 @@
     </div>
 
 
-    <div class="navbar-container">
-        {% include 'navbar.html' %}
-    </div>
     {% block content %}
     {% endblock %}
 
