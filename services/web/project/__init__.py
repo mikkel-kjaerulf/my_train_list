@@ -201,7 +201,25 @@ def search():
     # Perform search in the database based on the query
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM trains WHERE name ILIKE '%{query}%'")
+    # Define the search query
+
+    # Build the dynamic query
+    columns_query = '''
+    SELECT column_name
+    FROM information_schema.columns
+    WHERE table_name = 'trains'
+    '''
+    cursor.execute(columns_query)
+    columns = [column[0] for column in cursor.fetchall()]
+
+    # drop the id column
+    columns.pop(0)
+
+    search_condition = ' OR '.join(f"{column} ILIKE '%{query}%'" for column in columns)
+    dynamic_query = f"SELECT * FROM trains WHERE {search_condition}"
+
+    # Execute the dynamic query
+    cursor.execute(dynamic_query)
     results = cursor.fetchall()
     cursor.close()
     connection.close()
