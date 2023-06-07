@@ -176,7 +176,9 @@
         <div class="user-reviews">
             {% for index in range(usernames|length) %}
                 <div class="user-review">
+                    <a href="{{ url_for('mylist', name=usernames[index]) }}">
                     <h3>{{ usernames[index] }}</h3>
+                    </a>
                     <p>{{ comments[index] }}</p>
                     <p><strong>Rating: {{ ratings[index] }}</strong></p>
                 </div>

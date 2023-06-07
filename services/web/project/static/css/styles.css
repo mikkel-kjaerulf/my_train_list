@@ -138,16 +138,21 @@
     /* Style the search form */
     .search-form {
         display: flex;
-        justify-content: right;
+        /* center the search form */
+        justify-content: center;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
       }
 
     .search-input {
         padding: 10px;
         font-size: 16px;
+        max-width: 100%;
         flex: 1;
         border: 1px solid #a1a1a1a5;
         border-right: none;
-        border-radius: 10px 0 0 10px;
+        border-radius: 10px;
         font-family: monospace;
         font-weight: bold; 
     }
@@ -215,9 +220,7 @@
         transition: background-color 0.3s ease;
         line-height: 35px;
     }
-    .signlinks a:first-child {
-      margin-left: auto; /* Add this line to push the button to the right */
-    }
+
     
     .signlinks a:hover {
         background-color: #0c7cd5;
@@ -255,11 +258,8 @@
 
     .navbar-search {
         display: flex;
+        max-width: 100%;
         align-items: center;
-        margin-right: auto;
-        margin-top: 5px;
-        margin-right: 5px;
-        float: right;
     }
 
 
@@ -298,6 +298,9 @@
     transition: all 0.2s;
     overflow: visible;
   }
+  .grid-item.left .card {
+    left: -103%;
+}
   
   .grid-image {
     width: 100%;
@@ -609,6 +612,11 @@
       display: block;
       margin-bottom: 5px;
     }
+
+    .user-reviews a {
+      /* remove decorations */
+      text-decoration: none;
+    }
     
     .score-radios input[type="radio"] {
       display: none;
@@ -691,6 +699,10 @@
     .usearch-container {
         margin-top: 20px;
         margin-bottom: 20px;
+    }
+
+    .usearch-container .search-input {
+        border-radius: 10px 0 0 10px;
     }
 
     .logo-link {

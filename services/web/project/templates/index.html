@@ -211,26 +211,60 @@
         return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
     }
     $(document).ready(function() {
-  $(".left-button").click(function() {
-    var container = $(this).closest('.topt-container'); // Find the closest grid container
-    var grid = container.find('.grid'); // Find the grid within the container
-    var containerWidth = grid.width();
-    var scrollAmount = containerWidth;
+        // Function to check if the card position exceeds the container position
+        function checkCardPosition(container, card) {
+            var containerWidth = container.width();
+            var containerPosition = container.offset().left;
+            var cardWidth = card.outerWidth();
+            var cardPosition = card.offset().left;
 
-    grid.animate({ scrollLeft: "-=" + scrollAmount }, 0);
-  });
+            return (cardPosition + cardWidth) > (containerPosition + containerWidth);
+        }
 
-  $(".right-button").click(function() {
-    var container = $(this).closest('.topt-container'); // Find the closest grid container
-    var grid = container.find('.grid'); // Find the grid within the container
-    var containerWidth = grid.width();
-    var scrollAmount = containerWidth;
+        // Move cards to the left if necessary
+        function moveCardsToLeft(container) {
+            var grid = container.find('.grid');
+            var gridItems = grid.find('.grid-item');
 
-    grid.animate({ scrollLeft: "+=" + scrollAmount }, 0);
-  });
-});
+            gridItems.each(function() {
+                var card = $(this);
+                var isExceeding = checkCardPosition(container, card.find('.card'));
 
+                if (isExceeding) {
+                    card.addClass('left');
+                } else {
+                    card.removeClass('left');
+                }
+            });
+        }
 
+        // Scroll buttons event handlers
+        $(".left-button").click(function() {
+            var container = $(this).closest('.topt-container');
+            var grid = container.find('.grid');
+            var containerWidth = grid.width();
+            var scrollAmount = containerWidth;
+
+            grid.animate({ scrollLeft: "-=" + scrollAmount }, 0);
+            moveCardsToLeft(container);
+        });
+
+        $(".right-button").click(function() {
+            var container = $(this).closest('.topt-container');
+            var grid = container.find('.grid');
+            var containerWidth = grid.width();
+            var scrollAmount = containerWidth;
+
+            grid.animate({ scrollLeft: "+=" + scrollAmount }, 0);
+            moveCardsToLeft(container);
+        });
+
+        // Initial check and move cards on page load or resize or scroll
+        $('.topt-container').each(function() {
+            var container = $(this);
+            moveCardsToLeft(container);
+        });
+    });
 
 </script>
 
