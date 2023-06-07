@@ -23,7 +23,7 @@
 
     .topt-container {
         background-color: #dde6ed00;
-        max-width: 1400px;
+        max-width: 1600px;
         overflow: visible;
         height: 200px;
         margin: auto;
@@ -33,6 +33,7 @@
     .grid-container {
       display: flex;
     }
+
 
     
     /* Style the table */
@@ -378,7 +379,7 @@
 }
 
 /* make the card of the last grid element show up on the left side */
-.grid-item:last-child .card {
+.card.leftmost {
     left: -103%;
 }
 

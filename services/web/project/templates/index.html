@@ -213,29 +213,26 @@
     $(document).ready(function() {
         // Function to check if the card position exceeds the container position
         function checkCardPosition(container, card) {
-            var containerWidth = container.width();
-            var containerPosition = container.offset().left;
-            var cardWidth = card.outerWidth();
-            var cardPosition = card.offset().left;
+            // get position of card with getBoundingClientRect()
+            var cardPosition = card[0].getBoundingClientRect().right + card.width();
+            // get position of container with getBoundingClientRect()
+            var containerPosition = container[0].getBoundingClientRect().right;
 
-            return (cardPosition + cardWidth) > (containerPosition + containerWidth);
+            console.log(cardPosition);
+            return cardPosition > containerPosition;
         }
 
         // Move cards to the left if necessary
-        function moveCardsToLeft(container) {
-            var grid = container.find('.grid');
-            var gridItems = grid.find('.grid-item');
+        function moveCardsToLeft(container, card, grid_element) {
 
-            gridItems.each(function() {
-                var card = $(this);
-                var isExceeding = checkCardPosition(container, card.find('.card'));
+            card.removeClass('leftmost');
+            var isExceeding = checkCardPosition(container, grid_element);
 
-                if (isExceeding) {
-                    card.addClass('left');
-                } else {
-                    card.removeClass('left');
-                }
-            });
+            if (isExceeding) {
+                card.addClass('leftmost');
+            } else {
+                card.removeClass('leftmost');
+            }
         }
 
         // Scroll buttons event handlers
@@ -259,11 +256,15 @@
             moveCardsToLeft(container);
         });
 
-        // Initial check and move cards on page load or resize or scroll
-        $('.topt-container').each(function() {
-            var container = $(this);
-            moveCardsToLeft(container);
+        // check and possibly move cards when hovering over the grid element
+        $('.grid-item').mouseenter(function() {
+            var container = $(this).closest('.grid-container');
+            var card = $(this).find('.card');
+            
+            moveCardsToLeft(container, card, $(this));
         });
+
+        
     });
 
 </script>
