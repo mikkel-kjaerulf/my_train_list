@@ -30,7 +30,7 @@ This is a Flask web application that requires an SQL database and a configuratio
    ```
    Replace `<username>` with your PostgreSQL username, `<database_name>` with the name of your database, and `train_list.sql` with the appropriate path to the SQL file.
 
-3. Edit the configuration file `config.ini` in the `/services/web/project` folder and provide the necessary SQL database information in it.
+3. Edit the configuration file `config.ini` in the `/services/web/project` folder and provide the necessary SQL database information in it. Here you may need to change the ´host´ variable to ´localhost´ instead of ´db´.
   
 4. Run the Flask app: To start your Flask app, run the `__init__.py` file in the `/services/web/project/` folder:
    ```
