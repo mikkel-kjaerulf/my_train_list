@@ -40,11 +40,11 @@ This is a Flask web application that requires an SQL database and a configuratio
    
  ### ER-Diagram for the database:
 ![er_diagram](https://github.com/mikkel-kjaerulf/my_train_list/assets/114149729/1181f28f-42c3-44f4-ad0f-9effcd5fe962)
- ![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/b3c949d7-9f6b-43ef-a246-3cf6593bffc9)
  
  ### Images
-![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/5a12c5fd-8f13-4318-833e-26a65c3c3ac4)
-![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/6bc2c031-0a48-4a6a-9745-d63cce46dc30)
-![image](https://github.com/mikkel-kjaerulf/my_train_list/assets/24521077/dbf234f5-02de-4fab-b1be-5f4ff8658a7d)
+ <img width="1440" alt="home_page" src="https://github.com/mikkel-kjaerulf/my_train_list/assets/114149729/3b97795e-f36c-47ce-be7b-45df5fb2c4ef">
+<img width="1440" alt="train_info" src="https://github.com/mikkel-kjaerulf/my_train_list/assets/114149729/6cbac82e-a844-4ac6-9aff-e839e3029131">
+<img width="1440" alt="train_review" src="https://github.com/mikkel-kjaerulf/my_train_list/assets/114149729/8e97af7d-6fdf-44cc-94e8-af472ffad859">
+<img width="1440" alt="list_example" src="https://github.com/mikkel-kjaerulf/my_train_list/assets/114149729/cd3047ca-8e7f-4834-a84c-0c94a1838599">
 
 
