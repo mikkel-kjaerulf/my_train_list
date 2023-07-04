@@ -5,6 +5,9 @@ from flask_login import UserMixin, login_user, logout_user, login_required, curr
 import psycopg2
 import os
 
+# encrypt passwords with flask-bcrypt
+from flask_bcrypt import Bcrypt
+
 import configparser
 
 # Get the directory of the Flask app
@@ -28,6 +31,7 @@ db_password = config['Database']['password']
 db_uri = f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] = 'trust me bro'
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 login_manager = LoginManager(app)
@@ -89,7 +93,7 @@ def login():
         query = "SELECT id, name, mail, password FROM users WHERE mail = %s"
         cursor.execute(query, (mail,))
         result = cursor.fetchone()
-        if result and result[3] == password:
+        if result and bcrypt.check_password_hash(result[3], password):
             user = User(result)
             login_user(user)
             return jsonify({'redirect': True})  # Return JSON response for successful login
@@ -139,7 +143,8 @@ def index():
     if current_user.is_authenticated:
         cursor.execute(f"SELECT name, operators, family, picture, round AS rating FROM trains AS t LEFT JOIN (SELECT r.tid, ROUND(AVG(r.rating),2), COUNT(r.rating) FROM reviews r GROUP BY r.tid) AS r ON t.id = r.tid WHERE t.id IN (SELECT tid FROM listed_trains WHERE uid = {current_user.id});")
         uresults = cursor.fetchall()
-        user_logged_in = True
+        if len(uresults) > 0:
+            user_logged_in = True
     cursor.close()
     connection.close()
     
@@ -272,7 +277,7 @@ def render_table():
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     if current_user.is_authenticated:
-        return redirect('/')  # Redirect to another page (e.g., dashboard) if user is already logged in
+        return redirect('/')  # Redirect to another page (e.g., dashboard) if user is already logged inesult[3] == password
     if request.method == "POST":
         # Establish a connection to the PostgreSQL database
         conn = get_db_connection()
@@ -282,7 +287,9 @@ def signup():
         name = request.form.get("fname")
         mail = request.form.get("femail")
         password = request.form.get("fpassword")
-
+        # encrypt password with bcrypt
+        password = bcrypt.generate_password_hash(password).decode('utf-8')
+                                            
         # Check if email already exists in the database
         cursor.execute("SELECT * FROM users WHERE mail = %s", (mail,))
         existing_user_mail = cursor.fetchone()

@@ -131,6 +131,7 @@
         </div>
         <form method="post">
             <div class="add-button">
+                <input type="hidden" name="train_id" value="{{ train_id }}">
                 {% if in_user_list %}
                     <input type="hidden" name="form_name" value="remove-from-list">
                     <button type="submit" class="remove-train-button">Remove Train from My List</button>
