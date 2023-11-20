@@ -10,6 +10,10 @@ This is a Flask web application that requires an SQL database and a configuratio
    ```
    sudo docker-compose up -d
    ```
+   You can check the logs for the port at which the server is running by executing:
+   ```
+   sudo docker logs my_train_list-web-1
+   ```
    If you dont have Docker-Compose, please follow the following instructions.
 
 
